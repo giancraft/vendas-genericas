@@ -1,6 +1,6 @@
-package classes;
+package DTO;
 
-public class Conta {
+public class ContaDTO {
 	private String senha;
 	private String nome;
 	private String email;

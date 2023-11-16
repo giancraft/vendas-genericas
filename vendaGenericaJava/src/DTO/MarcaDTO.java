@@ -1,6 +1,6 @@
-package classes;
+package DTO;
 
-public class Marca {
+public class MarcaDTO {
 	private String nome;
 	private int idMarca;
 	public String getNome() {
