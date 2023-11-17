@@ -1,16 +1,16 @@
-package classes;
+package DTO;
 
 import java.util.ArrayList;
 
-public class Produto {
+public class ProdutoDTO {
 	private String nome;
 	private Double preco;
 	private int estoque;
 	private int idProduto;
 	private String descricao;
 	private ArrayList<String> imagens;
-	private Marca marca;
-	private Vendedor vendedor;
+	private MarcaDTO marca;
+	private VendedorDTO vendedor;
 	public String getNome() {
 		return nome;
 	}
@@ -47,16 +47,16 @@ public class Produto {
 	public void setImagens(ArrayList<String> imagens) {
 		this.imagens = imagens;
 	}
-	public Marca getMarca() {
+	public MarcaDTO getMarca() {
 		return marca;
 	}
-	public void setMarca(Marca marca) {
+	public void setMarca(MarcaDTO marca) {
 		this.marca = marca;
 	}
-	public Vendedor getVendedor() {
+	public VendedorDTO getVendedor() {
 		return vendedor;
 	}
-	public void setVendedor(Vendedor vendedor) {
+	public void setVendedor(VendedorDTO vendedor) {
 		this.vendedor = vendedor;
 	}
 	

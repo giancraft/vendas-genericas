@@ -1,4 +1,4 @@
-package classes;
+package ENUMS;
 
 public enum StatusPagamento {
 	FINALIZADO,

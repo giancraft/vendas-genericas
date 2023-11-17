@@ -1,17 +1,16 @@
-package classes;
+package DTO;
 
+import ENUMS.StatusPagamento;
+import ENUMS.FormaPagamento;
 import java.util.ArrayList;
 
-public class Pagamento {
+public class PagamentoDTO {
 	private double valor;
 	private FormaPagamento formaPagamento;
 	private StatusPagamento status = StatusPagamento.PENDENTE;
 	private ArrayList<String> produtosNome;
 	private ArrayList<Double> produtosPreco;
 	
-	public void Pagamento(ArrayList<Carrinho> carrinho) {
-		
-	}
 	public double getValor() {
 		return valor;
 	}
