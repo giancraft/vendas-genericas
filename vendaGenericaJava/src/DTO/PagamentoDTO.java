@@ -2,6 +2,8 @@ package DTO;
 
 import ENUMS.StatusPagamento;
 import ENUMS.FormaPagamento;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PagamentoDTO {
@@ -10,7 +12,35 @@ public class PagamentoDTO {
 	private StatusPagamento status = StatusPagamento.PENDENTE;
 	private ArrayList<String> produtosNome;
 	private ArrayList<Double> produtosPreco;
+	private ArrayList<Integer> produtosQuantidade;
+	private LocalDate data;
+	private int carrinho;
+	private int id;
 	
+	public LocalDate getData() {
+		return data;
+	}
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+	public int getCarrinho() {
+		return carrinho;
+	}
+	public void setCarrinho(int carrinho) {
+		this.carrinho = carrinho;
+	}
+	public ArrayList<Integer> getProdutosQuantidade() {
+		return produtosQuantidade;
+	}
+	public void setProdutosQuantidade(ArrayList<Integer> produtosQuantidade) {
+		this.produtosQuantidade = produtosQuantidade;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public double getValor() {
 		return valor;
 	}

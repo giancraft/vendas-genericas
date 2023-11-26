@@ -2,18 +2,19 @@ package DTO;
 
 public class MarcaDTO {
 	private String nome;
-	private int idMarca;
+	private int id;
+	
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getIdMarca() {
-		return idMarca;
+	public int getId() {
+		return id;
 	}
-	public void setIdMarca(int idMarca) {
-		this.idMarca = idMarca;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

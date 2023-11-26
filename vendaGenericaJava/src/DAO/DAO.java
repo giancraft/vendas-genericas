@@ -2,7 +2,7 @@ package DAO;
 
 import java.util.ArrayList;
 
-public class DAO {
+abstract class DAO {
 	
 	protected String primaryKey = "id";
 
@@ -10,7 +10,4 @@ public class DAO {
     
     protected ArrayList<String> fillable;
     
-    protected ArrayList<String> timestamps;
-    
-    protected String deleteTimestamps;
 }

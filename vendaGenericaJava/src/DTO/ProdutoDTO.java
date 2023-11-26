@@ -6,11 +6,10 @@ public class ProdutoDTO {
 	private String nome;
 	private Double preco;
 	private int estoque;
-	private int idProduto;
+	private int id;
 	private String descricao;
-	private ArrayList<String> imagens;
-	private MarcaDTO marca;
-	private VendedorDTO vendedor;
+	private int marca;
+	private int vendedor;
 	public String getNome() {
 		return nome;
 	}
@@ -29,11 +28,11 @@ public class ProdutoDTO {
 	public void setEstoque(int estoque) {
 		this.estoque = estoque;
 	}
-	public int getIdProduto() {
-		return idProduto;
+	public int getId() {
+		return id;
 	}
-	public void setIdProduto(int idProduto) {
-		this.idProduto = idProduto;
+	public void setId(int idProduto) {
+		this.id = idProduto;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -41,23 +40,18 @@ public class ProdutoDTO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public ArrayList<String> getImagens() {
-		return imagens;
-	}
-	public void setImagens(ArrayList<String> imagens) {
-		this.imagens = imagens;
-	}
-	public MarcaDTO getMarca() {
+	public int getMarca() {
 		return marca;
 	}
-	public void setMarca(MarcaDTO marca) {
+	public void setMarca(int marca) {
 		this.marca = marca;
 	}
-	public VendedorDTO getVendedor() {
+	public int getVendedor() {
 		return vendedor;
 	}
-	public void setVendedor(VendedorDTO vendedor) {
+	public void setVendedor(int vendedor) {
 		this.vendedor = vendedor;
 	}
+	
 	
 }

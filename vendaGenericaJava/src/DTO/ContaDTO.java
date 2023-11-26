@@ -5,16 +5,16 @@ public class ContaDTO {
 	private String nome;
 	private String email;
 	private String telefone;
-	private String ulrImagemPerfil;
-
-	public String getUlrImagemPerfil() {
-		return ulrImagemPerfil;
-	}
-
-	public void setUlrImagemPerfil(String ulrImagemPerfil) {
-		this.ulrImagemPerfil = ulrImagemPerfil;
-	}
+	private int id;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getTelefone() {
 		return telefone;
 	}
