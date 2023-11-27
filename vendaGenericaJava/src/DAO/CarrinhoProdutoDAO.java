@@ -8,15 +8,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import DBConnection.SQLConnection;
-import DTO.CarrinhoDTO;
+import DTO.CarrinhoProdutoDTO;
 
-public class CarrinhoDAO extends DAO {
+public class CarrinhoProdutoDAO {
+
 	protected String primaryKey = "idCarrinho";
-	public String table = "carrinho";
+	protected String primaryKeytwo = "idProduto";
+	public String table = "carrinhoproduto";
     
     public List<String> fillable = new ArrayList<String>(Arrays.asList(
-    		"idCliente",
-    		"nome"
+    		"idCarrinho",
+    		"idProduto",
+    		"quantidade"
 	));
     
     public String getTable() {
@@ -26,8 +29,8 @@ public class CarrinhoDAO extends DAO {
 	public List<String> getFillable() {
 		return fillable;
 	}
-	
-	public boolean create(CarrinhoDTO carrinho) {
+
+	public boolean create(CarrinhoProdutoDTO carrinhoProduto) {
     	try {
     		Connection conn = SQLConnection.connect();
             StringBuilder strBuilder = new StringBuilder();
@@ -35,11 +38,12 @@ public class CarrinhoDAO extends DAO {
             strBuilder.append("INSERT INTO ");
             strBuilder.append(getTable());
             strBuilder.append(fillable.toString().replace('[', '(').replace(']', ')'));
-            strBuilder.append(" VALUES (?, ?)");
+            strBuilder.append(" VALUES (?, ?, ?)");
             
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
-            preparedStmt.setInt(1, carrinho.getCliente());
-            preparedStmt.setString(2, carrinho.getNome());
+            preparedStmt.setInt(1, carrinhoProduto.getIdCarrinho());
+            preparedStmt.setInt(2, carrinhoProduto.getIdProduto());
+            preparedStmt.setInt(3, carrinhoProduto.getQuantidade());
             
             preparedStmt.executeUpdate();
             preparedStmt.close();
@@ -50,21 +54,25 @@ public class CarrinhoDAO extends DAO {
 			return false;
 		}
     }
-	public boolean update(CarrinhoDTO carrinho) {
+	public boolean update(CarrinhoProdutoDTO carrinhoProduto) {
 		try {
 			Connection conn = SQLConnection.connect();
 			StringBuilder strBuilder = new StringBuilder();
 			
             strBuilder.append("UPDATE ");
             strBuilder.append(getTable());
-            strBuilder.append(" SET nome = ? WHERE ");
+            strBuilder.append(" SET quantidade = ? WHERE  ");
             strBuilder.append(this.primaryKey);
-            strBuilder.append("= ? ");
+            strBuilder.append(" = ");
+            strBuilder.append(carrinhoProduto.getIdCarrinho());
+            strBuilder.append(" AND ");
+            strBuilder.append(this.primaryKeytwo);
+            strBuilder.append(" = ");
+            strBuilder.append(carrinhoProduto.getIdProduto());
             
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
            
-            preparedStmt.setString(1, carrinho.getNome());
-            preparedStmt.setInt(2, carrinho.getId());
+            preparedStmt.setInt(1, carrinhoProduto.getQuantidade());
             
             int affectedRows = preparedStmt.executeUpdate();
             
@@ -78,61 +86,7 @@ public class CarrinhoDAO extends DAO {
 	    }
 	}
 
-	public List<CarrinhoDTO> get() {
-        try {
-            Connection conn = SQLConnection.connect();
-            StringBuilder strBuilder = new StringBuilder();
-            strBuilder.append("SELECT * FROM ");
-            strBuilder.append(getTable());
-            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
-            ResultSet rs = preparedStmt.executeQuery();
-            List<CarrinhoDTO> listObj = mountList(rs);
-            return listObj;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-	public List<CarrinhoDTO> find(CarrinhoDTO carrinho) {
-        try {
-            Connection conn = SQLConnection.connect();
-            StringBuilder strBuilder = new StringBuilder();
-            strBuilder.append("SELECT * FROM ");
-            strBuilder.append(getTable());
-            strBuilder.append("	WHERE ");
-            strBuilder.append(this.primaryKey);
-            strBuilder.append("= ?");
-            
-            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
-            
-            preparedStmt.setInt(1, carrinho.getId());
-            ResultSet rs = preparedStmt.executeQuery();
-            List<CarrinhoDTO> listObj = mountList(rs);
-            return listObj;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-	public List<CarrinhoDTO> mountList(ResultSet rs) {
-		List<CarrinhoDTO> listObj = new ArrayList<CarrinhoDTO>();
-        try {
-            while (rs.next()) {
-            	CarrinhoDTO obj = new CarrinhoDTO();
-            	
-                obj.setId(rs.getInt(1));
-                obj.setCliente(rs.getInt(2));
-                obj.setNome(rs.getString(3));
-                
-                listObj.add(obj);
-            }
-            return listObj;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-	}
-	public boolean delete(CarrinhoDTO carrinho) {
+	public boolean delete(CarrinhoProdutoDTO carrinhoProduto) {
 		try {
 			Connection conn = SQLConnection.connect();
 			StringBuilder strBuilder = new StringBuilder();
@@ -141,11 +95,14 @@ public class CarrinhoDAO extends DAO {
 			
             strBuilder.append(" WHERE ");
             strBuilder.append(this.primaryKey);
-            strBuilder.append("= ?");
-             
+            strBuilder.append(" = ");
+            strBuilder.append(carrinhoProduto.getIdCarrinho());
+            strBuilder.append(" AND ");
+            strBuilder.append(this.primaryKeytwo);
+            strBuilder.append(" = ");
+            strBuilder.append(carrinhoProduto.getIdProduto());
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
             
-            preparedStmt.setInt(1, carrinho.getId());
             
             preparedStmt.executeUpdate();
             preparedStmt.close();
@@ -156,27 +113,62 @@ public class CarrinhoDAO extends DAO {
 	         return false;
 	    }
 	}
-	public boolean insertProdutoInCarrinho(int produtoId, int quantidade, int carrinhoId) {
-		try {
-    		Connection conn = SQLConnection.connect();
+	public List<CarrinhoProdutoDTO> get() {
+        try {
+            Connection conn = SQLConnection.connect();
             StringBuilder strBuilder = new StringBuilder();
-            
-            strBuilder.append("INSERT INTO carrinhoproduto");
-            strBuilder.append(" VALUES (?, ?, ?)");
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<CarrinhoProdutoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<CarrinhoProdutoDTO> find(CarrinhoProdutoDTO carrinhoProduto) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE ");
+            strBuilder.append(this.primaryKey);
+            strBuilder.append(" = ");
+            strBuilder.append(carrinhoProduto.getIdCarrinho());
+            strBuilder.append(" AND ");
+            strBuilder.append(this.primaryKeytwo);
+            strBuilder.append(" = ");
+            strBuilder.append(carrinhoProduto.getIdProduto());
             
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
             
-            preparedStmt.setInt(1, carrinhoId);
-            preparedStmt.setInt(2, produtoId);
-            preparedStmt.setInt(3, quantidade);
-            
-            preparedStmt.executeUpdate();
-            preparedStmt.close();
-            conn.close();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+            ResultSet rs = preparedStmt.executeQuery();
+            List<CarrinhoProdutoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<CarrinhoProdutoDTO> mountList(ResultSet rs) {
+		List<CarrinhoProdutoDTO> listObj = new ArrayList<CarrinhoProdutoDTO>();
+        try {
+            while (rs.next()) {
+            	CarrinhoProdutoDTO obj = new CarrinhoProdutoDTO();
+            	
+                obj.setIdCarrinho(rs.getInt(1));
+                obj.setIdProduto(rs.getInt(2));
+                obj.setQuantidade(rs.getInt(3));
+                
+                listObj.add(obj);
+            }
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 	}
 }
