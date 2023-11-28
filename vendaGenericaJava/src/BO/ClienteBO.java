@@ -2,8 +2,13 @@ package BO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import DAO.ClienteDAO;
+import DTO.ContaDTO;
+import VIEW.ClienteView;
 
 public class ClienteBO {
 
@@ -42,5 +47,35 @@ public class ClienteBO {
             e.printStackTrace();
             return null;
         }
+    }
+    public static void alterarDados(ContaDTO cliente) {
+    	ClienteDAO clientedao = new ClienteDAO();
+    	List<ContaDTO> email = clientedao.findByEmail(cliente);
+    	if(!(email.size()>0)) {
+    		clientedao.create(cliente);
+    		System.out.println("Cliente cadastrado com sucesso");
+    	}else {
+    		System.out.println("Este e-mail já foi cadastrado como cliente");
+    	}
+    }
+    public static void cadastrarCliente(ContaDTO cliente) {
+    	ClienteDAO clientedao = new ClienteDAO();
+    	clientedao.update(cliente);
+    }
+    public static void logarCliente(ContaDTO cliente) {
+    	ClienteDAO clientedao = new ClienteDAO();
+    	List<ContaDTO> email = clientedao.findByEmail(cliente);
+    	if((email.size()>0)) {
+        	List<ContaDTO> pass = clientedao.findByEmailPassword(cliente);
+        	if((pass.size()>0)) {
+        		System.out.println("Cliente logado com sucesso");
+        		ClienteView.clienteLogado = pass.get(0);
+        		ClienteView.loginStatus = true;
+        	}else {
+        		System.out.println("E-mail e senhas não coicidem");
+        	}
+    	}else {
+    		System.out.println("Este e-mail não foi cadastrado");
+    	}
     }
 }

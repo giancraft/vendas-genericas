@@ -120,6 +120,45 @@ public class ClienteDAO extends DAO{
             return null;
         }
     }
+	public List<ContaDTO> findByEmail(ContaDTO cliente) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE email = ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setString(1, cliente.getEmail());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ContaDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<ContaDTO> findByEmailPassword(ContaDTO cliente) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE email = ? AND senha = ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setString(1, cliente.getEmail());
+            preparedStmt.setString(2, cliente.getSenha());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ContaDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	public List<ContaDTO> mountList(ResultSet rs) {
 		List<ContaDTO> listObj = new ArrayList<ContaDTO>();
         try {
