@@ -101,7 +101,6 @@ public class ClienteView {
 		String senha = "";
 		System.out.println("Insira sua senha: ");
 		senha = input.nextLine();
-		// lógica se não estiver vazio
 		if(!nome.equals("")) {
 			clienteLogado.setNome(nome);	
 		}
@@ -182,6 +181,4 @@ public class ClienteView {
 		System.out.println(ClienteBO.cadastrarCliente(cliente));
 		main(null);
 	}
-	
-
 }
