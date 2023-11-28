@@ -48,34 +48,43 @@ public class ClienteBO {
             return null;
         }
     }
-    public static void alterarDados(ContaDTO cliente) {
+    public static String cadastrarCliente(ContaDTO cliente) {
     	ClienteDAO clientedao = new ClienteDAO();
     	List<ContaDTO> email = clientedao.findByEmail(cliente);
     	if(!(email.size()>0)) {
     		clientedao.create(cliente);
-    		System.out.println("Cliente cadastrado com sucesso");
+    		ClienteView.redirectTo="";
+    		return "Cliente cadastrado com sucesso";
     	}else {
-    		System.out.println("Este e-mail já foi cadastrado como cliente");
+    		ClienteView.redirectTo="cadastro";
+    		return "Este e-mail já foi cadastrado como cliente";
     	}
     }
-    public static void cadastrarCliente(ContaDTO cliente) {
+    public static String alterarDados(ContaDTO cliente) {
     	ClienteDAO clientedao = new ClienteDAO();
-    	clientedao.update(cliente);
+    	if(clientedao.update(cliente)){
+        	return "Dados alterados com sucesso";
+    	}else {
+        	return "Dados não puderam ser alterados, entre em contato com o suporte";
+    	}
     }
-    public static void logarCliente(ContaDTO cliente) {
+    public static String logarCliente(ContaDTO cliente) {
     	ClienteDAO clientedao = new ClienteDAO();
     	List<ContaDTO> email = clientedao.findByEmail(cliente);
     	if((email.size()>0)) {
         	List<ContaDTO> pass = clientedao.findByEmailPassword(cliente);
         	if((pass.size()>0)) {
-        		System.out.println("Cliente logado com sucesso");
         		ClienteView.clienteLogado = pass.get(0);
         		ClienteView.loginStatus = true;
+        		ClienteView.redirectTo="";
+        		return "Cliente logado com sucesso";
         	}else {
-        		System.out.println("E-mail e senhas não coicidem");
+        		ClienteView.redirectTo="login";
+        		return "E-mail e senhas não coicidem";
         	}
     	}else {
-    		System.out.println("Este e-mail não foi cadastrado");
+    		ClienteView.redirectTo="login";
+    		return "Este e-mail não foi cadastrado";
     	}
     }
 }
