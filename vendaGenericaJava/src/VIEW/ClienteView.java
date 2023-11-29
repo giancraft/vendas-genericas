@@ -1,6 +1,7 @@
 package VIEW;
 
 import DTO.ContaDTO;
+import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
 
 import java.util.List;
@@ -26,7 +27,6 @@ public class ClienteView {
 				break;
 			}
 		}
-		System.out.println("Bem vindo ao sistema!\n");
 		if(!loginStatus) {
 			int response;
 			do {
@@ -44,11 +44,11 @@ public class ClienteView {
 		}else {
 			int response;
 			do {
-				System.out.println("Gostaria de delogar [0], ver os produtos[1], ver carrinhos[2], alterar seus dados[3]?");
+				System.out.println("Gostaria de deslogar [0], ver os produtos[1], ver carrinhos[2], alterar seus dados[3] ou ver seus dados[4]?");
 				Scanner input = new Scanner(System.in);
 				response = input.nextInt();
 				input.nextLine();
-			}while(!(response==1 || response==0 || response==2));
+			}while(!(response==1 || response==0 || response==2 || response==3 || response==4));
 			View.limparTerminal();
 			if(response == 0) {
 				deslogar();
@@ -56,8 +56,14 @@ public class ClienteView {
 				mostrarProdutos();
 			}else if(response == 2) {
 				mostrarCarrinhos();
-			}else {
+			}else if(response == 3) {
 				alterardados();
+			}else {
+				System.out.println("Dados do usuário: ");
+				System.out.println("Nome: "+ClienteView.clienteLogado.getNome());
+				System.out.println("E-mail: "+ClienteView.clienteLogado.getEmail());
+				System.out.println("Telefone: "+ClienteView.clienteLogado.getTelefone());
+				main(null);
 			}
 		}
 	}
@@ -66,7 +72,7 @@ public class ClienteView {
 	}
 	public static void mostrarProdutos() {
 		System.out.println("Você escolheu motrar os produtos!");
-		List<ProdutoDTO> produtos = ProdutoBO.listarProdutos();
+		List<ProdutoDTO> produtos = ProdutoBO.listarProdutos(new MarcaDTO());
 		System.out.print("id  |Nome\n");
 		for(int i = 0; i<produtos.size(); i++) {
 			System.out.print(i+1);
@@ -84,22 +90,31 @@ public class ClienteView {
 			main(null);
 		}else {
 			ProdutoBO.mostrarDescricao(response);
+			System.out.println("[0] para voltar para listagem");
+			System.out.println("[1] para adicionar à um carrinho");
+			response = input.nextInt();
+			input.nextLine();
+			if(response == 0) {
+				mostrarProdutos();
+			}else {
+				
+			}
 		}
 	}
 	public static void alterardados() {
 		System.out.println("Você escolheu alterar dados da sua conta!");
 		Scanner input = new Scanner(System.in);
 		String nome = "";
-		System.out.println("Insira seu nome (limite de 60 caracteres): ");
+		System.out.println("Insira seu nome, deixe vazio para não alterar: ");
 		nome = input.nextLine();
 		String email = "";
-		System.out.println("Insira seu email (limite de 60 caracteres): ");
+		System.out.println("Insira seu email, deixe vazio para não alterar: ");
 		email = input.nextLine();
 		String telefone = "";
-		System.out.println("Insira seu telefone (9 digitos): ");
+		System.out.println("Insira seu telefone, deixe vazio para não alterar: ");
 		telefone = input.nextLine();
 		String senha = "";
-		System.out.println("Insira sua senha: ");
+		System.out.println("Insira sua senha, deixe vazio para não alterar: ");
 		senha = input.nextLine();
 		if(!nome.equals("")) {
 			clienteLogado.setNome(nome);	

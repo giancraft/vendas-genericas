@@ -9,6 +9,7 @@ import java.util.List;
 
 import DBConnection.SQLConnection;
 import DTO.ContaDTO;
+import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
 
 public class ProdutoDAO {
@@ -131,6 +132,24 @@ public class ProdutoDAO {
             return null;
         }
     }
+	public List<ProdutoDTO> getByVendedor(int idVendedor) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append(" WHERE idVendedor ");
+            strBuilder.append(" = ?");
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            preparedStmt.setInt(1, idVendedor);
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ProdutoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	public List<ProdutoDTO> find(ProdutoDTO produto) {
         try {
             Connection conn = SQLConnection.connect();
@@ -144,6 +163,26 @@ public class ProdutoDAO {
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
             
             preparedStmt.setInt(1, produto.getId());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ProdutoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<ProdutoDTO> getByMarca(MarcaDTO marca,int idVendedor) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE idMarca = ? AND idVendedor = ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setInt(1, marca.getId());
+            preparedStmt.setInt(2, idVendedor);
             ResultSet rs = preparedStmt.executeQuery();
             List<ProdutoDTO> listObj = mountList(rs);
             return listObj;

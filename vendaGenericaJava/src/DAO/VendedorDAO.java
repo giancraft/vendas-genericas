@@ -139,6 +139,45 @@ public class VendedorDAO {
             return null;
         }
 	}
+	public List<ContaDTO> findByEmail(ContaDTO vendedor) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE email = ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setString(1, vendedor.getEmail());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ContaDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<ContaDTO> findByEmailPassword(ContaDTO vendedor) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE email = ? AND senha = ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setString(1, vendedor.getEmail());
+            preparedStmt.setString(2, vendedor.getSenha());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ContaDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	public boolean delete(ContaDTO vendedor) {
 		try {
 			Connection conn = SQLConnection.connect();

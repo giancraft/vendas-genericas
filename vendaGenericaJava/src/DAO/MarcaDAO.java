@@ -111,6 +111,25 @@ public class MarcaDAO extends DAO{
             return null;
         }
     }
+	public List<MarcaDTO> getByNome(String nomeM) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE LOWER(nome) = '");
+            strBuilder.append(nomeM);
+            strBuilder.append("'");
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+
+            ResultSet rs = preparedStmt.executeQuery();
+            List<MarcaDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	public List<MarcaDTO> mountList(ResultSet rs) {
 		List<MarcaDTO> listObj = new ArrayList<MarcaDTO>();
         try {

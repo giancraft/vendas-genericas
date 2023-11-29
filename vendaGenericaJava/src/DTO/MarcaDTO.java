@@ -1,6 +1,9 @@
 package DTO;
 
 public class MarcaDTO {
+    public boolean isEmpty() {
+        return nome == null || nome.isEmpty() || id == 0;
+    }
 	private String nome;
 	private int id;
 	
