@@ -189,7 +189,7 @@ public class VendedorView {
 		System.out.println("Digite [0] para sair e o id da marca para vizualizar os produtos desta marca");
 		response = input.nextInt();
 		input.nextLine();
-		if(response==0) {
+		if(response==0 || response>marcas.size()) {
 			main(null);
 		}else {
 			mostrarProdutosByMarca(response);
@@ -239,11 +239,11 @@ public class VendedorView {
 		System.out.println("Digite [0] para sair e o id do produto para ver outras operações");
 		response = input.nextInt();
 		input.nextLine();
-		if(response==0) {
+		if(response==0 || response>produtos.size()) {
 			main(null);
 		}else {
-			ProdutoBO.mostrarDescricao(response);
 			int id = response;
+			ProdutoBO.mostrarDescricao(produtos.get(id-1).getId());
 			System.out.println("[0] para voltar para listagem");
 			System.out.println("[1] para alterar os dados");
 			System.out.println("[2] para excluir o produto");
@@ -252,11 +252,9 @@ public class VendedorView {
 			if(response == 0) {
 				mostrarProdutos(new MarcaDTO());
 			}else if(response==1) {
-				alterarProduto(id);
+				alterarProduto(produtos.get(id-1).getId());
 			}else {
-				ProdutoDTO prod = new ProdutoDTO();
-				prod.setId(id);
-				System.out.println(ProdutoBO.excluirProduto(prod));
+				System.out.println(ProdutoBO.excluirProduto(produtos.get(id-1)));
 				main(null);
 			}
 		}
