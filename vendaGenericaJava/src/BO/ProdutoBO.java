@@ -4,11 +4,13 @@ import java.util.List;
 
 import DAO.MarcaDAO;
 import DAO.ProdutoDAO;
+import DAO.ProdutoPagoDAO;
 import DAO.VendedorDAO;
 import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;
 import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
+import DTO.ProdutoPagoDTO;
 import VIEW.VendedorView;
 
 public class ProdutoBO {
@@ -27,6 +29,10 @@ public class ProdutoBO {
 		ProdutoDTO prod = new ProdutoDTO();
 		prod.setId(carrinho.getIdProduto());
 		return produtodao.find(prod);
+	}
+	public static List<ProdutoPagoDTO> pagoObterPorId(int id) {
+		ProdutoPagoDAO produtodao = new ProdutoPagoDAO();
+		return produtodao.getByPagamento(id);
 	}
 	
 	public static List<ProdutoDTO> listarProdutosCliente(MarcaDTO marca){

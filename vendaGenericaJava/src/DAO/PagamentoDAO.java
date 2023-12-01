@@ -146,6 +146,27 @@ public class PagamentoDAO extends DAO {
             return null;
         }
     }
+
+	public List<PagamentoDTO> getByData(LocalDate inicio, LocalDate fim) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE dataAlteracao >= ? AND dataAlteracao <=?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setString(1, inicio.toString());
+            preparedStmt.setString(2, fim.toString());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<PagamentoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	public List<PagamentoDTO> find(PagamentoDTO pagamento) {
         try {
             Connection conn = SQLConnection.connect();

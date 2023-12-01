@@ -1,16 +1,26 @@
 package VIEW;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
 import BO.MarcaBO;
+import BO.PagamentoBO;
 import BO.ProdutoBO;
 import BO.VendedorBO;
+import DAO.CarrinhoDAO;
+import DAO.CarrinhoProdutoDAO;
+import DAO.ClienteDAO;
 import DAO.MarcaDAO;
 import DAO.ProdutoDAO;
+import DTO.CarrinhoDTO;
+import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;
 import DTO.MarcaDTO;
+import DTO.PagamentoDTO;
 import DTO.ProdutoDTO;
+import DTO.ProdutoPagoDTO;
 
 public class VendedorView {
 
@@ -46,10 +56,10 @@ public class VendedorView {
 		}else {
 			int response;
 			do {
-				System.out.println("Gostaria de deslogar [0], ver os produtos[1], adicionar um produto[2], ver marcas[3], adicionar marca[4] alterar seus dados[5], ver seus dados[6] ou gerar um relatorio?");
+				System.out.println("Gostaria de deslogar [0], ver os produtos[1], adicionar um produto[2], ver marcas[3], adicionar marca[4] alterar seus dados[5], ver seus dados[6] ou gerar um relatorio[7]?");
 				response = input.nextInt();
 				input.nextLine();
-			}while(!(response==1 || response==0 || response==2 || response==3 || response==4 || response==5 || response==6));
+			}while(!(response==1 || response==0 || response==2 || response==3 || response==4 || response==5 || response==6 || response==7));
 			View.limparTerminal();
 			if(response == 0) {
 				deslogar();
@@ -70,12 +80,57 @@ public class VendedorView {
 				System.out.println("Telefone: "+VendedorView.vendedorLogado.getTelefone());
 				main(null);
 			}else {
-				// data inicio e fim
+				System.out.println("Insira a data de inicio: ");
+				String data = input.nextLine();
+	            LocalDate inicio = LocalDate.now();
+		        try {
+		            inicio = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		        } catch (Exception e) {
+		            System.out.println("Formato de data inválido. Certifique-se de usar o formato yyyy-MM-dd.");
+		        }
+				System.out.println("Insira a data de fim: ");
+				data = input.nextLine();
+				LocalDate fim = LocalDate.now();
+		        try {
+		            fim = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		        } catch (Exception e) {
+		            System.out.println("Formato de data inválido. Certifique-se de usar o formato yyyy-MM-dd.");
+		        }
 				obterVendas(inicio, fim);
 			}
 		}
 	}
 	public static void obterVendas(LocalDate inicio, LocalDate fim) {
+		List<PagamentoDTO> pagamentos = PagamentoBO.getByData(inicio, fim);
+		for(int i=0; i<pagamentos.size();i++) {
+			CarrinhoDAO carrinhodao = new CarrinhoDAO();
+			CarrinhoDTO carrinhodto = new CarrinhoDTO();
+			carrinhodto.setId(pagamentos.get(i).getCarrinho());
+			carrinhodto = carrinhodao.find(carrinhodto).get(0);
+			ClienteDAO clientedao = new ClienteDAO();
+			ContaDTO cliente = new ContaDTO();
+			cliente.setId(carrinhodto.getCliente());
+			cliente = clientedao.find(cliente).get(0);
+			System.out.println("Cliente: " + cliente.getNome());
+			System.out.println("Produtos: ");
+			CarrinhoProdutoDAO carrinhopdao = new CarrinhoProdutoDAO();
+			List<CarrinhoProdutoDTO> carrinhosrs = carrinhopdao.getByCarrinho(carrinhodto.getId());
+			System.out.println("id  |Nome  | Quantidade | Preço| Data | Total");
+			for(int j=0; j<carrinhosrs.size(); j++) {
+				List<ProdutoPagoDTO> produtos = ProdutoBO.pagoObterPorId(pagamentos.get(i).getId());
+				for(int k=0; k<produtos.size();k++) {
+					for(int l = 0; l<produtos.size(); l++) {
+						System.out.print(i+1);
+						System.out.print("|"+produtos.get(k).getNome()+"|");
+						System.out.print("|"+produtos.get(k).getQuantidade()+"|");
+						System.out.print("|"+produtos.get(k).getPreco()+"|");
+						System.out.print("|"+pagamentos.get(i).getData()+"|");
+						System.out.print("|"+produtos.get(k).getPreco()*produtos.get(k).getQuantidade()+"|\n");
+					}
+				}
+			}
+			
+		}
 		main(null);
 	}
 	public static void alterarProduto(int id) {

@@ -6,10 +6,12 @@ import DAO.CarrinhoDAO;
 import DAO.CarrinhoProdutoDAO;
 import DAO.PagamentoDAO;
 import DAO.ProdutoDAO;
+import DAO.ProdutoPagoDAO;
 import DTO.CarrinhoDTO;
 import DTO.CarrinhoProdutoDTO;
 import DTO.PagamentoDTO;
 import DTO.ProdutoDTO;
+import DTO.ProdutoPagoDTO;
 
 public class CarrinhoBO {
 	public static String deletarCarrinhoProd(CarrinhoProdutoDTO carrinho) {
@@ -43,7 +45,12 @@ public class CarrinhoBO {
 		}
 		PagamentoDAO pagamentodao = new PagamentoDAO();
 		List<PagamentoDTO> pagamentos = pagamentodao.getByCarrinho(carrinho.getId());
+		ProdutoPagoDAO produtospagosdao = new ProdutoPagoDAO();
 		for(int i = 0; i<pagamentos.size(); i++) {
+			List<ProdutoPagoDTO> produtosPagos = produtospagosdao.getByCarrinho(carrinho.getId());
+			for(int j =0; j<produtosPagos.size();j++) {
+				produtospagosdao.delete(produtosPagos.get(j));
+			}
 			pagamentodao.delete(pagamentos.get(i));
 		}
 		return carrinhodao.delete(carrinho) ? "Carrinho deletado com sucesso":"Ocorreu um erro, tente novamente";

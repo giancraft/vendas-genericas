@@ -16,6 +16,10 @@ import ENUMS.FormaPagamento;
 import ENUMS.StatusPagamento;
 
 public class PagamentoBO {
+	public static List<PagamentoDTO> getByData(LocalDate inicio, LocalDate fim){
+		PagamentoDAO pagdao = new PagamentoDAO();
+		return pagdao.getByData(inicio, fim);
+	}
 	public static List<PagamentoDTO> getByCarrinho(int id){
 		PagamentoDAO pagdao = new PagamentoDAO();
 		return pagdao.getByCarrinho(id);

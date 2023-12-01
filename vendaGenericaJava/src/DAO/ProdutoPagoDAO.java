@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import DBConnection.SQLConnection;
+import DTO.PagamentoDTO;
 import DTO.ProdutoDTO;
 import DTO.ProdutoPagoDTO;
 
@@ -55,6 +56,25 @@ public class ProdutoPagoDAO {
 		}
     }
 
+	public List<ProdutoPagoDTO> getByCarrinho(int id) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE idCarrinho = ? ");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setInt(1, id);
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ProdutoPagoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	public boolean update(ProdutoPagoDTO produto) {
 		try {
 			Connection conn = SQLConnection.connect();
@@ -135,6 +155,27 @@ public class ProdutoPagoDAO {
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
             
             preparedStmt.setInt(1, produto.getId());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ProdutoPagoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+	public List<ProdutoPagoDTO> getByPagamento(int id) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE idPagamento");
+            strBuilder.append("= ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setInt(1, id);
             ResultSet rs = preparedStmt.executeQuery();
             List<ProdutoPagoDTO> listObj = mountList(rs);
             return listObj;
