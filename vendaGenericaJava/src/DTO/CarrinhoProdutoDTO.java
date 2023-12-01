@@ -4,7 +4,14 @@ public class CarrinhoProdutoDTO {
 	private int idCarrinho;
 	private int idProduto;
 	private int quantidade;
+	private String nome;
 	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 	public int getIdCarrinho() {
 		return idCarrinho;
 	}

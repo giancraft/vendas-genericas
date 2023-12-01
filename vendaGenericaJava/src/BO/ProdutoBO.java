@@ -5,12 +5,34 @@ import java.util.List;
 import DAO.MarcaDAO;
 import DAO.ProdutoDAO;
 import DAO.VendedorDAO;
+import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;
 import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
 import VIEW.VendedorView;
 
 public class ProdutoBO {
+	public static void alterarProdutos() {
+		
+	}
+	public static List<ProdutoDTO> find(int id) {
+		ProdutoDAO produtodao = new ProdutoDAO();
+		ProdutoDTO prod = new ProdutoDTO();
+		prod.setId(id);
+		return produtodao.find(prod);
+	}
+	
+	public static List<ProdutoDTO> obterPorId(CarrinhoProdutoDTO carrinho) {
+		ProdutoDAO produtodao = new ProdutoDAO();
+		ProdutoDTO prod = new ProdutoDTO();
+		prod.setId(carrinho.getIdProduto());
+		return produtodao.find(prod);
+	}
+	
+	public static List<ProdutoDTO> listarProdutosCliente(MarcaDTO marca){
+		ProdutoDAO produtodao = new ProdutoDAO();
+		return marca.isEmpty()? produtodao.get() : produtodao.getByMarcaCliente(marca)  ;
+	}
 	public static List<ProdutoDTO> listarProdutos(MarcaDTO marca){
 		ProdutoDAO produtodao = new ProdutoDAO();
 		return marca.isEmpty()? produtodao.getByVendedor(VendedorView.vendedorLogado.getId()) : produtodao.getByMarca(marca, VendedorView.vendedorLogado.getId())  ;

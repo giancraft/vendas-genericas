@@ -1,6 +1,6 @@
-CREATE DATABASE VendasGenericas;
-USE VendasGenericas;
-CREATE TABLE VENDEDOR(
+CREATE DATABASE vendasgenericas;
+USE vendasgenericas;
+CREATE TABLE vendedor(
 	idVendedor INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(idVendedor),
     nome VARCHAR(60) NOT NULL,
@@ -8,12 +8,12 @@ CREATE TABLE VENDEDOR(
     telefone VARCHAR(9),
     senha VARCHAR(60) NOT NULL
 );
-CREATE TABLE MARCA(
+CREATE TABLE marca(
 	idMarca INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(idMarca),
     nome VARCHAR(60)
 );
-CREATE TABLE PRODUTO(
+CREATE TABLE produto(
 	idProduto INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(idProduto),
     nome VARCHAR(60) NOT NULL,
@@ -25,14 +25,7 @@ CREATE TABLE PRODUTO(
     idVendedor INT NOT NULL,
     FOREIGN KEY(idVendedor) REFERENCES VENDEDOR(idVendedor)
 );
-CREATE TABLE IMAGEM(
-	idImagem INT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (idImagem),
-    idProduto INT NOT NULL,
-    FOREIGN KEY (idProduto) REFERENCES PRODUTO(idProduto),
-	url VARCHAR(140)
-);
-CREATE TABLE CLIENTE(
+CREATE TABLE cliente(
 	idCliente INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(idCliente),
     nome VARCHAR(60) NOT NULL,
@@ -40,14 +33,14 @@ CREATE TABLE CLIENTE(
     telefone VARCHAR(9),
     senha VARCHAR(60) NOT NULL
 );
- CREATE TABLE CARRINHO(
+ CREATE TABLE carrinho(
 	idCarrinho INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(idCarrinho),
     idCliente INT NOT NULL,
     FOREIGN KEY(idCliente) REFERENCES CLIENTE(idCliente),
     nome VARCHAR(60)
  );
- CREATE TABLE CARRINHOPRODUTO(
+ CREATE TABLE carrinhoproduto(
 	idCarrinho INT NOT NULL,
 	idProduto INT NOT NULL,
     PRIMARY KEY(idCarrinho, idProduto),
@@ -55,15 +48,18 @@ CREATE TABLE CLIENTE(
     FOREIGN KEY(idProduto) REFERENCES PRODUTO(idProduto),
     quantidade INT
  );
- CREATE TABLE PAGAMENTO(
+ CREATE TABLE pagamento(
 	idPagamento INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (idPagamento),
     formaPagamento ENUM('DEBITO', 'CREDITO', 'BOLETO', 'PIX'),
-    status ENUM('Finalizado', 'Pendente'),
+    status ENUM('FINALIZADO', 'PENDENTE'),
     idCarrinho INT NOT NULL,
+    dataAlteracao DATE,
     FOREIGN KEY(idCarrinho) REFERENCES CARRINHO(idCarrinho)
  );
- CREATE TABLE idProdutoPago(
+ #teste
+use vendasgenericas;
+ CREATE TABLE produtopago(
 	idProdutoPago INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (idProdutoPago),
     idPagamento INT NOT NULL,
@@ -72,4 +68,3 @@ CREATE TABLE CLIENTE(
     preco DOUBLE,
     quantidade INT
  );
- 

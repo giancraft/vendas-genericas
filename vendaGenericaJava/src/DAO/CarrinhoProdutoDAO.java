@@ -9,6 +9,7 @@ import java.util.List;
 
 import DBConnection.SQLConnection;
 import DTO.CarrinhoProdutoDTO;
+import DTO.ProdutoDTO;
 
 public class CarrinhoProdutoDAO {
 
@@ -120,6 +121,48 @@ public class CarrinhoProdutoDAO {
             strBuilder.append("SELECT * FROM ");
             strBuilder.append(getTable());
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<CarrinhoProdutoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<CarrinhoProdutoDTO> getByCarrinho(int id) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE idCarrinho = ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+
+            preparedStmt.setInt(1, id);
+            
+            ResultSet rs = preparedStmt.executeQuery();
+            List<CarrinhoProdutoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<CarrinhoProdutoDTO> getByProduto(ProdutoDTO produto) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE ");
+            strBuilder.append(this.primaryKeytwo);
+            strBuilder.append(" = ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+
+            preparedStmt.setInt(1, produto.getId());
+            
             ResultSet rs = preparedStmt.executeQuery();
             List<CarrinhoProdutoDTO> listObj = mountList(rs);
             return listObj;

@@ -1,17 +1,24 @@
 package VIEW;
 
+import DTO.CarrinhoDTO;
+import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;
 import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
+import ENUMS.FormaPagamento;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import BO.CarrinhoBO;
 import BO.ClienteBO;
+import BO.MarcaBO;
+import BO.PagamentoBO;
 import BO.ProdutoBO;
 
 public class ClienteView {
-	
+	public static Scanner input = new Scanner(System.in);
 	public static boolean loginStatus = false;
 	public static ContaDTO clienteLogado;
 	public static String redirectTo="";
@@ -31,7 +38,6 @@ public class ClienteView {
 			int response;
 			do {
 				System.out.println("Gostaria de realizar o login[0] ou cadastrar-se[1]?");
-				Scanner input = new Scanner(System.in);
 				response = input.nextInt();
 				input.nextLine();
 			}while(!(response==1 || response==0));
@@ -44,11 +50,10 @@ public class ClienteView {
 		}else {
 			int response;
 			do {
-				System.out.println("Gostaria de deslogar [0], ver os produtos[1], ver carrinhos[2], alterar seus dados[3] ou ver seus dados[4]?");
-				Scanner input = new Scanner(System.in);
+				System.out.println("Gostaria de deslogar [0], ver os produtos[1], ver carrinhos[2], adicionar carrinho[3], alterar seus dados[4] ou ver seus dados[5]?");
 				response = input.nextInt();
 				input.nextLine();
-			}while(!(response==1 || response==0 || response==2 || response==3 || response==4));
+			}while(!(response==1 || response==0 || response==2 || response==3 || response==4 || response==5));
 			View.limparTerminal();
 			if(response == 0) {
 				deslogar();
@@ -57,6 +62,8 @@ public class ClienteView {
 			}else if(response == 2) {
 				mostrarCarrinhos();
 			}else if(response == 3) {
+				adicionarCarrinho();
+			}else if(response == 4) {
 				alterardados();
 			}else {
 				System.out.println("Dados do usuário: ");
@@ -67,12 +74,156 @@ public class ClienteView {
 			}
 		}
 	}
+	public static void adicionarCarrinho(){
+		System.out.println("Você escolheu cadastrar carrinho!");
+		System.out.println("Preencha os campos para cadastrar");
+		String nome = "";
+		do {
+			System.out.println("Insira seu nome (limite de 60 caracteres): ");
+			nome = input.nextLine();
+		}while(nome.equals("") || nome.length()>60);		
+		CarrinhoDTO carrinho = new CarrinhoDTO();
+		carrinho.setNome(nome);
+		carrinho.setCliente(ClienteView.clienteLogado.getId());
+		System.out.println(CarrinhoBO.criarCarrinho(carrinho));
+		main(null);
+	}
 	public static void mostrarCarrinhos() {
-		
+		System.out.println("Você escolheu mostrar os seus carrinhos!");
+		List<CarrinhoDTO> carrinhos = CarrinhoBO.listarCarrinhoCliente(ClienteView.clienteLogado.getId());
+		System.out.print("id  |Nome\n");
+		for(int i = 0; i<carrinhos.size(); i++) {
+			System.out.print(i+1);
+			for(int x = ProdutoBO.qtdDigitos(i); x<4; x++) {
+				System.out.print(" ");
+			}
+			System.out.print("|"+carrinhos.get(i).getNome()+"\n");
+		}
+		Scanner input = new Scanner(System.in);
+		int response;
+		System.out.println("Digite [0 id inválido] para sair ou o id do carrinho para ver outras operações");
+		response = input.nextInt();
+		input.nextLine();
+		int idCarrinho = response-1;
+		if(response==0 || response>carrinhos.size()) {
+			main(null);
+		}else {
+			List<CarrinhoProdutoDTO> produtos = CarrinhoBO.mostrarProdutos(carrinhos.get(idCarrinho).getId());
+			System.out.println("id  |Nome    |Quantidade");
+			for(int i = 0; i<produtos.size(); i++) {
+				System.out.print(i+1);
+				for(int x = ProdutoBO.qtdDigitos(i); x<4; x++) {
+					System.out.print(" ");
+				}
+				System.out.print("|"+produtos.get(i).getNome());
+				for(int x = ProdutoBO.qtdDigitos(i); x<8; x++) {
+					System.out.print(" ");
+				}
+				System.out.print("|"+produtos.get(i).getQuantidade()+"\n");
+			}
+			do {
+				System.out.println("[0] para voltar para listagem");
+				System.out.println("[1] para alterar o nome");
+				System.out.println("[2] para deletar o carrinho");
+				System.out.println("[3] para realizar o pagamento");
+				System.out.println("[4] para remover o produto");
+				System.out.println("[5] para alterar a quantidade do produto");
+				response = input.nextInt();
+			}while(response<0 && response>5);
+			input.nextLine();
+			if(response == 0) {
+				mostrarCarrinhos();
+			}else if(response == 1){
+				alterarNomeCarrinho(carrinhos.get(idCarrinho));
+			}else if(response == 2){
+				deletarCarrinho(carrinhos.get(idCarrinho));
+			}else if(response == 3){
+				pagarCarrinho(carrinhos.get(idCarrinho));
+			}else if(response == 4){
+				int idprod =0;
+				do {
+					System.out.println("Insira a id do produto");
+					idprod = input.nextInt();
+				}while(idprod<=0 || idprod>produtos.size());	
+				removerProdutoDoCarrinho(produtos.get(idprod-1));
+			}else if(response == 5){
+				int idprod =0;
+				do {
+					System.out.println("Insira a id do produto");
+					idprod = input.nextInt();
+				}while(idprod<=0 || idprod>produtos.size());
+
+				int quantidade =0;
+				do {
+					System.out.println("Insira quantidade desejada do produto");
+					quantidade = input.nextInt();
+				}while(quantidade<=0 || quantidade>ProdutoBO.find(produtos.get(idprod-1).getIdProduto()).get(0).getEstoque());		
+				produtos.get(idprod-1).setQuantidade(quantidade);
+				alterarQuantidadeNoCarrinho(produtos.get(idprod-1));
+			}
+		}
+	}
+	public static void alterarQuantidadeNoCarrinho(CarrinhoProdutoDTO carrinhoproduto) {
+		System.out.println(CarrinhoBO.alterarCarrinho(carrinhoproduto));
+		main(null);
+	}
+	public static void removerProdutoDoCarrinho(CarrinhoProdutoDTO carrinhoproduto) {
+		System.out.println(CarrinhoBO.deletarCarrinhoProd(carrinhoproduto));
+		main(null);
+	}
+	public static void pagarCarrinho(CarrinhoDTO carrinho) {
+		System.out.println("Você escolheu pagar o carrinho!");
+		String formaPagamento = "";
+		do {
+			System.out.println("Insira sua forma de pagamento: ");
+			formaPagamento = input.nextLine().toUpperCase();
+		}while(formaPagamento.equals(""));	
+		List<CarrinhoProdutoDTO> produtos = CarrinhoBO.mostrarProdutos(carrinho.getId());
+		List<ProdutoDTO> produtosNovos = new ArrayList<>();
+		boolean valido=true;
+		for(int i = 0; i<produtos.size(); i++) {
+			if(ProdutoBO.obterPorId(produtos.get(i)).size()>0) {
+				ProdutoDTO produtoNovo = ProdutoBO.obterPorId(produtos.get(i)).get(0);
+				if((produtoNovo.getEstoque()-produtos.get(i).getQuantidade())>=0) {
+					produtoNovo.setEstoque(produtoNovo.getEstoque()-produtos.get(i).getQuantidade());
+					produtosNovos.add(produtoNovo);
+				}else {
+					System.out.println("Invalido o estoque não supre a quantidade");
+					valido = false;
+				}
+			}else {
+				valido = false;
+			}
+		}
+		if(valido) {
+			for(int i = 0; i<produtosNovos.size(); i++) {
+				ProdutoBO.alterarDados(produtosNovos.get(i));
+			}
+		}else {
+			main(null);
+		}
+		System.out.println(PagamentoBO.cadastrarPagamento(carrinho.getId(), formaPagamento));
+		main(null);
+	}
+	public static void deletarCarrinho(CarrinhoDTO carrinho) {
+		System.out.println("Você escolheu deletar o carrinho!");
+		System.out.println(CarrinhoBO.deletarCarrinho(carrinho));
+		main(null);
+	}
+	public static void alterarNomeCarrinho(CarrinhoDTO carrinho) {
+		System.out.println("Você escolheu alterar o nome do carrinho!");
+		String nome = "";
+		do {
+			System.out.println("Insira o nome: ");
+			nome = input.nextLine();
+		}while(nome.equals("") || nome.length()>60);
+		carrinho.setNome(nome);
+		System.out.println(CarrinhoBO.alterarCarrinho(carrinho));
+		main(null);
 	}
 	public static void mostrarProdutos() {
 		System.out.println("Você escolheu motrar os produtos!");
-		List<ProdutoDTO> produtos = ProdutoBO.listarProdutos(new MarcaDTO());
+		List<ProdutoDTO> produtos = ProdutoBO.listarProdutosCliente(new MarcaDTO());
 		System.out.print("id  |Nome\n");
 		for(int i = 0; i<produtos.size(); i++) {
 			System.out.print(i+1);
@@ -81,29 +232,57 @@ public class ClienteView {
 			}
 			System.out.print("|"+produtos.get(i).getNome()+"\n");
 		}
-		Scanner input = new Scanner(System.in);
 		int response;
-		System.out.println("Digite [0] para sair e o id do produto para ver outras operações?");
+		System.out.println("Digite [0 ou um id inválido] para sair ou o id do produto para ver outras operações?");
 		response = input.nextInt();
 		input.nextLine();
-		if(response==0) {
+		int id = response;
+		if(response==0 || response>produtos.size()) {
 			main(null);
 		}else {
-			ProdutoBO.mostrarDescricao(response);
-			System.out.println("[0] para voltar para listagem");
-			System.out.println("[1] para adicionar à um carrinho");
-			response = input.nextInt();
+			ProdutoBO.mostrarDescricao(produtos.get(id-1).getId());
+			do {
+				System.out.println("[0] para voltar para listagem");
+				System.out.println("[1] para adicionar à um carrinho");
+				response = input.nextInt();
+			}while(response!=0 && response!=1);
 			input.nextLine();
 			if(response == 0) {
 				mostrarProdutos();
 			}else {
-				
+				List<CarrinhoDTO> carrinhos;
+				do {
+					System.out.println("Insira o carrinho: ");
+					String nomeCarrinho = input.nextLine();
+					carrinhos = CarrinhoBO.getByNome(nomeCarrinho);
+				}while(carrinhos.size()!=1);
+				if(produtos.get(id-1).getEstoque()<=0) {
+					System.out.println("Produto não possui itens no estoque");
+					main(null);
+				}
+				int quantidade;
+				do {
+					System.out.println("Insira a quantidade");
+					quantidade = input.nextInt();
+				}while(quantidade<=0 || quantidade > produtos.get(id-1).getEstoque());
+				if(CarrinhoBO.isProdutoCadastrado(produtos.get(id-1))) {
+					CarrinhoProdutoDTO carrinhoProduto = CarrinhoBO.getProdutoCadastrado(produtos.get(id-1)).get(0);
+					carrinhoProduto.setQuantidade(quantidade);
+					System.out.println(CarrinhoBO.alterarCarrinho(carrinhoProduto));
+				}else {
+					CarrinhoProdutoDTO carrinhoProduto = new CarrinhoProdutoDTO();
+					carrinhoProduto.setIdCarrinho(carrinhos.get(0).getId());
+					carrinhoProduto.setIdProduto(produtos.get(id-1).getId());
+					carrinhoProduto.setNome(produtos.get(id-1).getNome());
+					carrinhoProduto.setQuantidade(quantidade);
+					System.out.println(CarrinhoBO.adicionarCarrinhoProduto(carrinhoProduto));
+				}
+				main(null);
 			}
 		}
 	}
 	public static void alterardados() {
 		System.out.println("Você escolheu alterar dados da sua conta!");
-		Scanner input = new Scanner(System.in);
 		String nome = "";
 		System.out.println("Insira seu nome, deixe vazio para não alterar: ");
 		nome = input.nextLine();
@@ -140,8 +319,6 @@ public class ClienteView {
 	public static void realizarLogin() {
 		System.out.println("Você escolheu logar com sua conta!");
 		System.out.println("Preencha os campos para logar-se");
-		Scanner input = new Scanner(System.in);
-		
 		String email = "";
 		do {
 			System.out.println("Insira seu email (limite de 60 caracteres): ");
@@ -163,7 +340,6 @@ public class ClienteView {
 	public static void realizarCadastro() {
 		System.out.println("Você escolheu cadastrar usuário!");
 		System.out.println("Preencha os campos para cadastrar-se");
-		Scanner input = new Scanner(System.in);
 		String nome = "";
 		do {
 			System.out.println("Insira seu nome (limite de 60 caracteres): ");

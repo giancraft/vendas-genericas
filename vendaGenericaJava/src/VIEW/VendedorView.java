@@ -3,7 +3,6 @@ package VIEW;
 import java.util.List;
 import java.util.Scanner;
 
-import BO.ClienteBO;
 import BO.MarcaBO;
 import BO.ProdutoBO;
 import BO.VendedorBO;
@@ -15,6 +14,7 @@ import DTO.ProdutoDTO;
 
 public class VendedorView {
 
+	public static Scanner input = new Scanner(System.in);
 	public static boolean loginStatus = false;
 	public static ContaDTO vendedorLogado;
 	public static String redirectTo="";
@@ -34,7 +34,6 @@ public class VendedorView {
 			int response;
 			do {
 				System.out.println("Gostaria de realizar o login[0] ou cadastrar-se[1]?");
-				Scanner input = new Scanner(System.in);
 				response = input.nextInt();
 				input.nextLine();
 			}while(!(response==1 || response==0));
@@ -47,8 +46,7 @@ public class VendedorView {
 		}else {
 			int response;
 			do {
-				System.out.println("Gostaria de deslogar [0], ver os produtos[1], adicionar um produto[2], ver marcas[3], adicionar marca[4] alterar seus dados[5] ou ver seus dados[6]?");
-				Scanner input = new Scanner(System.in);
+				System.out.println("Gostaria de deslogar [0], ver os produtos[1], adicionar um produto[2], ver marcas[3], adicionar marca[4] alterar seus dados[5], ver seus dados[6] ou gerar um relatorio?");
 				response = input.nextInt();
 				input.nextLine();
 			}while(!(response==1 || response==0 || response==2 || response==3 || response==4 || response==5 || response==6));
@@ -65,19 +63,24 @@ public class VendedorView {
 				adicionarMarca();
 			}else if(response == 5) {
 				alterardados();
-			}else {
+			}else if(response == 6){
 				System.out.println("Dados do usuário: ");
 				System.out.println("Nome: "+VendedorView.vendedorLogado.getNome());
 				System.out.println("E-mail: "+VendedorView.vendedorLogado.getEmail());
 				System.out.println("Telefone: "+VendedorView.vendedorLogado.getTelefone());
 				main(null);
+			}else {
+				// data inicio e fim
+				obterVendas(inicio, fim);
 			}
 		}
+	}
+	public static void obterVendas(LocalDate inicio, LocalDate fim) {
+		main(null);
 	}
 	public static void alterarProduto(int id) {
 		System.out.println("Você escolheu alterar produto!");
 		System.out.println("Preencha os campos para alterar");
-		Scanner input = new Scanner(System.in);
 		
 		String nome = "";
 		System.out.println("Insira o nome (vazio para não alterar): ");
@@ -131,7 +134,6 @@ public class VendedorView {
 	public static void adicionarProduto() {
 		System.out.println("Você escolheu cadastrar produto!");
 		System.out.println("Preencha os campos para cadastrar-se");
-		Scanner input = new Scanner(System.in);
 		String nome = "";
 		do {
 			System.out.println("Insira o nome (limite de 60 caracteres): ");
@@ -184,7 +186,6 @@ public class VendedorView {
 			}
 			System.out.print("|"+marcas.get(i).getNome()+"\n");
 		}
-		Scanner input = new Scanner(System.in);
 		int response;
 		System.out.println("Digite [0] para sair e o id da marca para vizualizar os produtos desta marca");
 		response = input.nextInt();
@@ -205,7 +206,6 @@ public class VendedorView {
 	public static void adicionarMarca() {
 		System.out.println("Você escolheu cadastrar Marca!");
 		System.out.println("Preencha os campos para cadastrar a marca");
-		Scanner input = new Scanner(System.in);
 		String nome = "";
 		do {
 			System.out.println("Insira o nome da marca (limite de 60 caracteres): ");
@@ -234,7 +234,6 @@ public class VendedorView {
 			}
 			System.out.print("|"+produtos.get(i).getNome()+"\n");
 		}
-		Scanner input = new Scanner(System.in);
 		int response;
 		System.out.println("Digite [0] para sair e o id do produto para ver outras operações");
 		response = input.nextInt();
@@ -261,7 +260,6 @@ public class VendedorView {
 	}
 	public static void alterardados() {
 		System.out.println("Você escolheu alterar dados da sua conta!");
-		Scanner input = new Scanner(System.in);
 		String nome = "";
 		System.out.println("Insira seu nome, deixe vazio para não alterar: ");
 		nome = input.nextLine();
@@ -292,7 +290,6 @@ public class VendedorView {
 	public static void realizarLogin() {
 		System.out.println("Você escolheu logar com sua conta!");
 		System.out.println("Preencha os campos para logar-se");
-		Scanner input = new Scanner(System.in);
 		
 		String email = "";
 		do {
@@ -315,7 +312,6 @@ public class VendedorView {
 	public static void realizarCadastro() {
 		System.out.println("Você escolheu cadastrar usuário!");
 		System.out.println("Preencha os campos para cadastrar-se");
-		Scanner input = new Scanner(System.in);
 		String nome = "";
 		do {
 			System.out.println("Insira seu nome (limite de 60 caracteres): ");

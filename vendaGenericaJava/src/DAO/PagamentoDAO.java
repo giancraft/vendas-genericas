@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import DBConnection.SQLConnection;
-import DTO.ContaDTO;
 import DTO.PagamentoDTO;
 import ENUMS.FormaPagamento;
 import ENUMS.StatusPagamento;
@@ -128,6 +127,25 @@ public class PagamentoDAO extends DAO {
             return null;
         }
     }
+	public List<PagamentoDTO> getLastByCarrinho(int id) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE idCarrinho = ? ORDER BY dataAlteracao DESC;");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setInt(1, id);
+            ResultSet rs = preparedStmt.executeQuery();
+            List<PagamentoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	public List<PagamentoDTO> find(PagamentoDTO pagamento) {
         try {
             Connection conn = SQLConnection.connect();
@@ -141,6 +159,26 @@ public class PagamentoDAO extends DAO {
             PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
             
             preparedStmt.setInt(1, pagamento.getId());
+            ResultSet rs = preparedStmt.executeQuery();
+            List<PagamentoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+	public List<PagamentoDTO> getByCarrinho(int id) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE idCarrinho ");
+            strBuilder.append("= ?");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setInt(1, id);
             ResultSet rs = preparedStmt.executeQuery();
             List<PagamentoDTO> listObj = mountList(rs);
             return listObj;

@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import DBConnection.SQLConnection;
-import DTO.ContaDTO;
 import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
 
@@ -183,6 +182,26 @@ public class ProdutoDAO {
             
             preparedStmt.setInt(1, marca.getId());
             preparedStmt.setInt(2, idVendedor);
+            ResultSet rs = preparedStmt.executeQuery();
+            List<ProdutoDTO> listObj = mountList(rs);
+            return listObj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+	public List<ProdutoDTO> getByMarcaCliente(MarcaDTO marca) {
+        try {
+            Connection conn = SQLConnection.connect();
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("SELECT * FROM ");
+            strBuilder.append(getTable());
+            strBuilder.append("	WHERE idMarca = ? ");
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(strBuilder.toString());
+            
+            preparedStmt.setInt(1, marca.getId());
             ResultSet rs = preparedStmt.executeQuery();
             List<ProdutoDTO> listObj = mountList(rs);
             return listObj;

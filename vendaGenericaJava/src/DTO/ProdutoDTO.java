@@ -1,7 +1,5 @@
 package DTO;
 
-import java.util.ArrayList;
-
 public class ProdutoDTO {
 	private String nome;
 	private Double preco;

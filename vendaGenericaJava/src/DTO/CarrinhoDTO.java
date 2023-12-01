@@ -1,7 +1,5 @@
 package DTO;
 
-import java.util.ArrayList;
-
 public class CarrinhoDTO{
 	private int cliente;
 	private String nome;
