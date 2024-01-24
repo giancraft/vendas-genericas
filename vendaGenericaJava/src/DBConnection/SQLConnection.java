@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class SQLConnection {
-	final static String HOST = "mysql16-farm2.uni5.net";
-	final static String NOME_DO_BANCO = "areadeprojetos30";
-	final static String USER = "areadeprojetos30";
-	final static String PASS = "pedro1301";
+	final static String HOST = "";
+	final static String NOME_DO_BANCO = "";
+	final static String USER = "";
+	final static String PASS = "";
     public static Connection connect() {
     	try {
     		Class.forName("com.mysql.cj.jdbc.Driver");
