@@ -1,6 +1,6 @@
 package DTO;
 
-public class ContaDTO {
+public class ContaDTO extends DTOBase{
 	private String senha;
 	private String nome;
 	private String email;

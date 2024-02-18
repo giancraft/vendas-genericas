@@ -6,7 +6,7 @@ import ENUMS.FormaPagamento;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class PagamentoDTO {
+public class PagamentoDTO  extends DTOBase{
 	private double valor;
 	private FormaPagamento formaPagamento;
 	private StatusPagamento status = StatusPagamento.PENDENTE;

@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import Interfaces.MarcaInterface;
 import DBConnection.SQLConnection;
 import DTO.MarcaDTO;
 
-public class MarcaDAO extends DAO{
+public class MarcaDAO extends DAO implements MarcaInterface{
 	protected String primaryKey = "idMarca";
 	public String table = "marca";
     

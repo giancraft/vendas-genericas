@@ -5,12 +5,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import DAO.ClienteDAO;
 import DTO.ContaDTO;
 import VIEW.ClienteView;
 
-public class ClienteBO {
+public class ClienteBO extends BO{
 
     public static boolean validarEmail(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -19,7 +17,6 @@ public class ClienteBO {
         return matcher.matches();
     }
     public static boolean validarTelefone(String telefone) {
-        // Aceita apenas números e exatamente 9 dígitos
         String regex = "^[0-9]{9}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(telefone);
@@ -49,7 +46,6 @@ public class ClienteBO {
         }
     }
     public static String cadastrarCliente(ContaDTO cliente) {
-    	ClienteDAO clientedao = new ClienteDAO();
     	List<ContaDTO> email = clientedao.findByEmail(cliente);
     	if(!(email.size()>0)) {
     		clientedao.create(cliente);
@@ -61,7 +57,6 @@ public class ClienteBO {
     	}
     }
     public static String alterarDados(ContaDTO cliente) {
-    	ClienteDAO clientedao = new ClienteDAO();
     	if(clientedao.update(cliente)){
         	return "Dados alterados com sucesso";
     	}else {
@@ -69,7 +64,6 @@ public class ClienteBO {
     	}
     }
     public static String logarCliente(ContaDTO cliente) {
-    	ClienteDAO clientedao = new ClienteDAO();
     	List<ContaDTO> email = clientedao.findByEmail(cliente);
     	if((email.size()>0)) {
         	List<ContaDTO> pass = clientedao.findByEmailPassword(cliente);

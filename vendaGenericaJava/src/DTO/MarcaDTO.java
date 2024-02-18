@@ -1,6 +1,6 @@
 package DTO;
 
-public class MarcaDTO {
+public class MarcaDTO  extends DTOBase{
     public boolean isEmpty() {
         return nome == null || nome.isEmpty() || id == 0;
     }

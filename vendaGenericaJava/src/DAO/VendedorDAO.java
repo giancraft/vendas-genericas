@@ -9,8 +9,9 @@ import java.util.List;
 
 import DBConnection.SQLConnection;
 import DTO.ContaDTO;
+import Interfaces.VendedorInterface;
 
-public class VendedorDAO {
+public class VendedorDAO extends DAO implements VendedorInterface{
 	protected String primaryKey = "idVendedor";
 	public String table = "vendedor";
     

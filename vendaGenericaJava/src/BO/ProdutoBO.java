@@ -3,8 +3,6 @@ package BO;
 import java.util.List;
 
 import DAO.MarcaDAO;
-import DAO.ProdutoDAO;
-import DAO.ProdutoPagoDAO;
 import DAO.VendedorDAO;
 import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;
@@ -13,42 +11,32 @@ import DTO.ProdutoDTO;
 import DTO.ProdutoPagoDTO;
 import VIEW.VendedorView;
 
-public class ProdutoBO {
-	public static void alterarProdutos() {
-		
-	}
+public class ProdutoBO extends BO {
 	public static List<ProdutoDTO> find(int id) {
-		ProdutoDAO produtodao = new ProdutoDAO();
 		ProdutoDTO prod = new ProdutoDTO();
 		prod.setId(id);
 		return produtodao.find(prod);
 	}
 	
 	public static List<ProdutoDTO> obterPorId(CarrinhoProdutoDTO carrinho) {
-		ProdutoDAO produtodao = new ProdutoDAO();
 		ProdutoDTO prod = new ProdutoDTO();
 		prod.setId(carrinho.getIdProduto());
 		return produtodao.find(prod);
 	}
 	public static List<ProdutoPagoDTO> pagoObterPorId(int id) {
-		ProdutoPagoDAO produtodao = new ProdutoPagoDAO();
-		return produtodao.getByPagamento(id);
+		return produtopagoDao.getByPagamento(id);
 	}
 	
 	public static List<ProdutoDTO> listarProdutosCliente(MarcaDTO marca){
-		ProdutoDAO produtodao = new ProdutoDAO();
 		return marca.isEmpty()? produtodao.get() : produtodao.getByMarcaCliente(marca)  ;
 	}
 	public static List<ProdutoDTO> listarProdutos(MarcaDTO marca){
-		ProdutoDAO produtodao = new ProdutoDAO();
 		return marca.isEmpty()? produtodao.getByVendedor(VendedorView.vendedorLogado.getId()) : produtodao.getByMarca(marca, VendedorView.vendedorLogado.getId())  ;
 	}
 	public static String alterarDados(ProdutoDTO prod) {
-		ProdutoDAO produtodao = new ProdutoDAO();
 		return produtodao.update(prod)? "Produto atualizado" : "Ocorreu um erro inesperado";
 	}
 	public static void mostrarDescricao(int idProduto) {
-		ProdutoDAO produtodao = new ProdutoDAO();
 		ProdutoDTO produtoDTO = new ProdutoDTO();
 		produtoDTO.setId(idProduto);
 		ProdutoDTO produto = produtodao.find(produtoDTO).get(0);
@@ -70,11 +58,9 @@ public class ProdutoBO {
 
 	}
 	public static String excluirProduto(ProdutoDTO produto) {
-		ProdutoDAO produtodao = new ProdutoDAO();
 		return produtodao.delete(produto)? "Produto deletado com sucesso" :"Ocorreu um erro inesperado";
 	}
 	public static String cadastrarProduto (ProdutoDTO produto) {
-		ProdutoDAO produtodao = new ProdutoDAO();
 		return produtodao.create(produto)? "Produto cadastrado com sucesso": "Ocorreu um erro, tente novamente";
 	}
 	public static int qtdDigitos (int n) {

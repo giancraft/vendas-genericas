@@ -9,8 +9,9 @@ import java.util.List;
 
 import DBConnection.SQLConnection;
 import DTO.CarrinhoDTO;
+import Interfaces.CarrinhoInterface;
 
-public class CarrinhoDAO extends DAO {
+public class CarrinhoDAO extends DAO implements CarrinhoInterface{
 	protected String primaryKey = "idCarrinho";
 	public String table = "carrinho";
     
@@ -26,7 +27,7 @@ public class CarrinhoDAO extends DAO {
 	public List<String> getFillable() {
 		return fillable;
 	}
-	
+
 	public boolean create(CarrinhoDTO carrinho) {
     	try {
     		Connection conn = SQLConnection.connect();
@@ -77,7 +78,6 @@ public class CarrinhoDAO extends DAO {
 	         return false;
 	    }
 	}
-
 	public List<CarrinhoDTO> get() {
         try {
             Connection conn = SQLConnection.connect();

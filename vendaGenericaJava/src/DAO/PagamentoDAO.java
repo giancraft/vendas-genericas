@@ -13,8 +13,9 @@ import DBConnection.SQLConnection;
 import DTO.PagamentoDTO;
 import ENUMS.FormaPagamento;
 import ENUMS.StatusPagamento;
+import Interfaces.PagamentoInterface;
 
-public class PagamentoDAO extends DAO {
+public class PagamentoDAO extends DAO implements PagamentoInterface {
 
 	protected String primaryKey = "idPagamento";
 	public String table = "pagamento";

@@ -2,12 +2,14 @@ package DAO;
 
 import java.util.ArrayList;
 
-abstract class DAO {
-	
+import DTO.DTOBase;
+
+public class DAO {
+	protected DTOBase ind;
 	protected String primaryKey = "id";
 
     protected String table;
     
     protected ArrayList<String> fillable;
-    
+
 }

@@ -6,13 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import DBConnection.SQLConnection;
-import DTO.PagamentoDTO;
 import DTO.ProdutoDTO;
 import DTO.ProdutoPagoDTO;
+import Interfaces.ProdutoPagoInterface;
 
-public class ProdutoPagoDAO {
+public class ProdutoPagoDAO extends DAO implements ProdutoPagoInterface {
 	protected String primaryKey = "idProdutoPago";
 	public String table = "produtopago";
     

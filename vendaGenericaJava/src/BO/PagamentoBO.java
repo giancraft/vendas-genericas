@@ -1,13 +1,8 @@
 package BO;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import DAO.CarrinhoProdutoDAO;
-import DAO.PagamentoDAO;
-import DAO.ProdutoPagoDAO;
-import DTO.CarrinhoDTO;
 import DTO.CarrinhoProdutoDTO;
 import DTO.PagamentoDTO;
 import DTO.ProdutoDTO;
@@ -15,18 +10,15 @@ import DTO.ProdutoPagoDTO;
 import ENUMS.FormaPagamento;
 import ENUMS.StatusPagamento;
 
-public class PagamentoBO {
+public class PagamentoBO extends BO {
 	public static List<PagamentoDTO> getByData(LocalDate inicio, LocalDate fim){
-		PagamentoDAO pagdao = new PagamentoDAO();
 		return pagdao.getByData(inicio, fim);
 	}
 	public static List<PagamentoDTO> getByCarrinho(int id){
-		PagamentoDAO pagdao = new PagamentoDAO();
 		return pagdao.getByCarrinho(id);
 	}
 	public static List<PagamentoDTO> getLast(int id) {
-		PagamentoDAO pagamentodao = new PagamentoDAO();
-		return pagamentodao.getLastByCarrinho(id);
+		return pagdao.getLastByCarrinho(id);
 	}
 	public static String cadastrarPagamento(int id, String forma) {
 		PagamentoDTO pagamento = new PagamentoDTO();
@@ -36,15 +28,12 @@ public class PagamentoBO {
 		pagamento.setStatus(StatusPagamento.FINALIZADO);
 		
 		CarrinhoProdutoDTO carrinho = new CarrinhoProdutoDTO();
-		CarrinhoProdutoDAO carrinhodao = new CarrinhoProdutoDAO();
-		carrinho = carrinhodao.getByCarrinho(id).get(0);
+		carrinho = carrinhoR.getByCarrinho(id).get(0);
 		
 		List<ProdutoDTO> produtos = ProdutoBO.obterPorId(carrinho);
-		PagamentoDAO pagamentodao = new PagamentoDAO();
-		pagamentodao.create(pagamento);
+		pagdao.create(pagamento);
 		pagamento=PagamentoBO.getLast(id).get(0);
 
-		ProdutoPagoDAO produtopagoDao = new ProdutoPagoDAO();
 		ProdutoPagoDTO produtoPago = new ProdutoPagoDTO();
 		
 		for(int i = 0; i<produtos.size(); i++) {

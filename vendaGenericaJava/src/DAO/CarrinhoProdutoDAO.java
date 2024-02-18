@@ -10,11 +10,14 @@ import java.util.List;
 import DBConnection.SQLConnection;
 import DTO.CarrinhoProdutoDTO;
 import DTO.ProdutoDTO;
+import Interfaces.CarrinhoProdutoInterfaces;
 
-public class CarrinhoProdutoDAO {
+public class CarrinhoProdutoDAO extends DAO implements CarrinhoProdutoInterfaces {
 
 	protected String primaryKey = "idCarrinho";
+	
 	protected String primaryKeytwo = "idProduto";
+	
 	public String table = "carrinhoproduto";
     
     public List<String> fillable = new ArrayList<String>(Arrays.asList(
@@ -22,7 +25,7 @@ public class CarrinhoProdutoDAO {
     		"idProduto",
     		"quantidade"
 	));
-    
+
     public String getTable() {
 		return table;
 	}

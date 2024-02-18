@@ -5,7 +5,6 @@ import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;
 import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
-import ENUMS.FormaPagamento;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.Scanner;
 
 import BO.CarrinhoBO;
 import BO.ClienteBO;
-import BO.MarcaBO;
 import BO.PagamentoBO;
 import BO.ProdutoBO;
 
@@ -162,6 +160,7 @@ public class ClienteView {
 				alterarQuantidadeNoCarrinho(produtos.get(idprod-1));
 			}
 		}
+		input.close();
 	}
 	public static void alterarQuantidadeNoCarrinho(CarrinhoProdutoDTO carrinhoproduto) {
 		System.out.println(CarrinhoBO.alterarCarrinho(carrinhoproduto));

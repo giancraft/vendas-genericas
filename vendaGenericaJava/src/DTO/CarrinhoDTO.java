@@ -1,6 +1,6 @@
 package DTO;
 
-public class CarrinhoDTO{
+public class CarrinhoDTO extends DTOBase{
 	private int cliente;
 	private String nome;
 	private int id;

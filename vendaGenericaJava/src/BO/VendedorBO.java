@@ -5,12 +5,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import DAO.VendedorDAO;
 import DTO.ContaDTO;
 import VIEW.VendedorView;
 
-public class VendedorBO {
+public class VendedorBO extends BO {
 
     public static boolean validarEmail(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -48,7 +46,6 @@ public class VendedorBO {
         }
     }
     public static String cadastrarVendedor(ContaDTO vendedor) {
-    	VendedorDAO vendedordao = new VendedorDAO();
     	List<ContaDTO> email = vendedordao.findByEmail(vendedor);
     	if(!(email.size()>0)) {
     		vendedordao.create(vendedor);
@@ -60,7 +57,6 @@ public class VendedorBO {
     	}
     }
     public static String alterarDados(ContaDTO vendedor) {
-    	VendedorDAO vendedordao = new VendedorDAO();
     	if(vendedordao.update(vendedor)){
         	return "Dados alterados com sucesso";
     	}else {
@@ -68,7 +64,6 @@ public class VendedorBO {
     	}
     }
     public static String logarVendedor(ContaDTO vendedor) {
-    	VendedorDAO vendedordao = new VendedorDAO();
     	List<ContaDTO> email = vendedordao.findByEmail(vendedor);
     	if((email.size()>0)) {
         	List<ContaDTO> pass = vendedordao.findByEmailPassword(vendedor);

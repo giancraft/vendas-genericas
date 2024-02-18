@@ -1,6 +1,6 @@
 package DTO;
 
-public class ProdutoDTO {
+public class ProdutoDTO  extends DTOBase{
 	private String nome;
 	private Double preco;
 	private int estoque;

@@ -9,11 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import DTO.ContaDTO;
+import Interfaces.ClienteInterface;
 
-public class ClienteDAO extends DAO{
+public class ClienteDAO extends DAO implements ClienteInterface{
 	protected String primaryKey = "idCliente";
-	public String table = "cliente";
-    
+	public String table = "cliente"; 
+	
     public List<String> fillable = new ArrayList<String>(Arrays.asList(
     		"nome",
     		"email",
@@ -202,4 +203,5 @@ public class ClienteDAO extends DAO{
 	         return false;
 	    }
 	}
+
 }
