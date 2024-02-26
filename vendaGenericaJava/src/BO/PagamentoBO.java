@@ -11,16 +11,16 @@ import ENUMS.FormaPagamento;
 import ENUMS.StatusPagamento;
 
 public class PagamentoBO extends BO {
-	public static List<PagamentoDTO> getByData(LocalDate inicio, LocalDate fim){
-		return pagdao.getByData(inicio, fim);
+	public List<PagamentoDTO> getByData(LocalDate inicio, LocalDate fim){
+		return permanencia.pagdao.getByData(inicio, fim);
 	}
-	public static List<PagamentoDTO> getByCarrinho(int id){
-		return pagdao.getByCarrinho(id);
+	public List<PagamentoDTO> getByCarrinho(int id){
+		return permanencia.pagdao.getByCarrinho(id);
 	}
-	public static List<PagamentoDTO> getLast(int id) {
-		return pagdao.getLastByCarrinho(id);
+	public List<PagamentoDTO> getLast(int id) {
+		return permanencia.pagdao.getLastByCarrinho(id);
 	}
-	public static String cadastrarPagamento(int id, String forma) {
+	public String cadastrarPagamento(int id, String forma) {
 		PagamentoDTO pagamento = new PagamentoDTO();
 		pagamento.setCarrinho(id);
 		pagamento.setFormaPagamento(FormaPagamento.valueOf(forma));
@@ -28,11 +28,11 @@ public class PagamentoBO extends BO {
 		pagamento.setStatus(StatusPagamento.FINALIZADO);
 		
 		CarrinhoProdutoDTO carrinho = new CarrinhoProdutoDTO();
-		carrinho = carrinhoR.getByCarrinho(id).get(0);
-		
-		List<ProdutoDTO> produtos = ProdutoBO.obterPorId(carrinho);
-		pagdao.create(pagamento);
-		pagamento=PagamentoBO.getLast(id).get(0);
+		carrinho = permanencia.carrinhoR.getByCarrinho(id).get(0);
+		ProdutoBO produtoBo = new ProdutoBO();
+		List<ProdutoDTO> produtos = produtoBo.obterPorId(carrinho);
+		permanencia.pagdao.create(pagamento);
+		pagamento=this.getLast(id).get(0);
 
 		ProdutoPagoDTO produtoPago = new ProdutoPagoDTO();
 		
@@ -40,8 +40,9 @@ public class PagamentoBO extends BO {
 			produtoPago.setIdPagamento(pagamento.getId());
 			produtoPago.setNome(produtos.get(i).getNome());
 			produtoPago.setPreco(produtos.get(i).getPreco());
-			produtoPago.setQuantidade(CarrinhoBO.getProdutoCadastrado(produtos.get(i)).get(0).getQuantidade());
-			produtopagoDao.create(produtoPago);
+			CarrinhoBO carrinhoBo = new CarrinhoBO();
+			produtoPago.setQuantidade(carrinhoBo.getProdutoCadastrado(produtos.get(i)).get(0).getQuantidade());
+			permanencia.produtopagoDao.create(produtoPago);
 		}
 		
 		return "Pagamento realizado";

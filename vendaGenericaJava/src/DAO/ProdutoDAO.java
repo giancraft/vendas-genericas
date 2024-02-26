@@ -11,7 +11,7 @@ import DTO.MarcaDTO;
 import DTO.ProdutoDTO;
 import Interfaces.ProdutoInterface;
 
-public class ProdutoDAO extends DAO  implements ProdutoInterface{
+public class ProdutoDAO extends DAO implements ProdutoInterface{
 
 	protected String primaryKey = "idProduto";
 	public String table = "produto";
@@ -214,16 +214,8 @@ public class ProdutoDAO extends DAO  implements ProdutoInterface{
 		List<ProdutoDTO> listObj = new ArrayList<ProdutoDTO>();
         try {
             while (rs.next()) {
-            	ProdutoDTO obj = new ProdutoDTO();
-            	
+            	ProdutoDTO obj = new ProdutoDTO(rs.getString(2), rs.getDouble(3), rs.getInt(4), rs.getString(5),rs.getInt(6), rs.getInt(7));
                 obj.setId(rs.getInt(1));
-                obj.setNome(rs.getString(2));
-                obj.setPreco(rs.getDouble(3));
-                obj.setEstoque(rs.getInt(4));
-                obj.setDescricao(rs.getString(5));
-                obj.setMarca(rs.getInt(6));
-                obj.setVendedor(rs.getInt(7));
-                
                 listObj.add(obj);
             }
             return listObj;

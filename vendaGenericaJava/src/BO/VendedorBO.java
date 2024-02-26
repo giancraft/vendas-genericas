@@ -10,20 +10,20 @@ import VIEW.VendedorView;
 
 public class VendedorBO extends BO {
 
-    public static boolean validarEmail(String email) {
+    public boolean validarEmail(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-    public static boolean validarTelefone(String telefone) {
+    public boolean validarTelefone(String telefone) {
         String regex = "^[0-9]{9}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(telefone);
         return matcher.matches();
     }
 
-    public static String calcularMD5(String input) {
+    public String calcularMD5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(input.getBytes());
@@ -45,10 +45,10 @@ public class VendedorBO extends BO {
             return null;
         }
     }
-    public static String cadastrarVendedor(ContaDTO vendedor) {
-    	List<ContaDTO> email = vendedordao.findByEmail(vendedor);
+    public String cadastrarVendedor(ContaDTO vendedor) {
+    	List<ContaDTO> email = permanencia.vendedordao.findByEmail(vendedor);
     	if(!(email.size()>0)) {
-    		vendedordao.create(vendedor);
+    		permanencia.vendedordao.create(vendedor);
     		VendedorView.redirectTo="";
     		return "Vendedor cadastrado com sucesso";
     	}else {
@@ -56,17 +56,17 @@ public class VendedorBO extends BO {
     		return "Este e-mail já foi cadastrado como cliente";
     	}
     }
-    public static String alterarDados(ContaDTO vendedor) {
-    	if(vendedordao.update(vendedor)){
+    public String alterarDados(ContaDTO vendedor) {
+    	if(permanencia.vendedordao.update(vendedor)){
         	return "Dados alterados com sucesso";
     	}else {
         	return "Dados não puderam ser alterados, entre em contato com o suporte";
     	}
     }
-    public static String logarVendedor(ContaDTO vendedor) {
-    	List<ContaDTO> email = vendedordao.findByEmail(vendedor);
+    public String logarVendedor(ContaDTO vendedor) {
+    	List<ContaDTO> email = permanencia.vendedordao.findByEmail(vendedor);
     	if((email.size()>0)) {
-        	List<ContaDTO> pass = vendedordao.findByEmailPassword(vendedor);
+        	List<ContaDTO> pass = permanencia.vendedordao.findByEmailPassword(vendedor);
         	if((pass.size()>0)) {
         		VendedorView.vendedorLogado = pass.get(0);
         		VendedorView.loginStatus = true;

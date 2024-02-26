@@ -5,10 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-import BO.MarcaBO;
-import BO.PagamentoBO;
-import BO.ProdutoBO;
-import BO.VendedorBO;
 import DAO.CarrinhoDAO;
 import DAO.CarrinhoProdutoDAO;
 import DAO.ClienteDAO;
@@ -22,7 +18,7 @@ import DTO.PagamentoDTO;
 import DTO.ProdutoDTO;
 import DTO.ProdutoPagoDTO;
 
-public class VendedorView {
+public class VendedorView extends Painel{
 
 	public static Scanner input = new Scanner(System.in);
 	public static boolean loginStatus = false;
@@ -47,7 +43,7 @@ public class VendedorView {
 				response = input.nextInt();
 				input.nextLine();
 			}while(!(response==1 || response==0));
-			View.limparTerminal();
+			limparTerminal();
 			if(response == 0) {
 				realizarLogin();
 			}else {
@@ -60,7 +56,7 @@ public class VendedorView {
 				response = input.nextInt();
 				input.nextLine();
 			}while(!(response==1 || response==0 || response==2 || response==3 || response==4 || response==5 || response==6 || response==7));
-			View.limparTerminal();
+			limparTerminal();
 			if(response == 0) {
 				deslogar();
 			}else if(response == 1) {

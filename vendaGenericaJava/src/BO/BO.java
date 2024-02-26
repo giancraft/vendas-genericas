@@ -1,6 +1,7 @@
 package BO;
 
-import Transfers.SQL;
+import Transfers.*;
 
-public class BO extends SQL{
+public class BO{
+	public Transfer permanencia = new JSON();
 }

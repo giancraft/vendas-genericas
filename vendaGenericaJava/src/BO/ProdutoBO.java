@@ -12,34 +12,33 @@ import DTO.ProdutoPagoDTO;
 import VIEW.VendedorView;
 
 public class ProdutoBO extends BO {
-	public static List<ProdutoDTO> find(int id) {
+	public List<ProdutoDTO> find(int id) {
 		ProdutoDTO prod = new ProdutoDTO();
 		prod.setId(id);
-		return produtodao.find(prod);
+		return permanencia.produtodao.find(prod);
 	}
-	
-	public static List<ProdutoDTO> obterPorId(CarrinhoProdutoDTO carrinho) {
+	public List<ProdutoDTO> obterPorId(CarrinhoProdutoDTO carrinho) {
 		ProdutoDTO prod = new ProdutoDTO();
 		prod.setId(carrinho.getIdProduto());
-		return produtodao.find(prod);
+		return permanencia.produtodao.find(prod);
 	}
-	public static List<ProdutoPagoDTO> pagoObterPorId(int id) {
-		return produtopagoDao.getByPagamento(id);
+	public List<ProdutoPagoDTO> pagoObterPorId(int id) {
+		return permanencia.produtopagoDao.getByPagamento(id);
 	}
 	
-	public static List<ProdutoDTO> listarProdutosCliente(MarcaDTO marca){
-		return marca.isEmpty()? produtodao.get() : produtodao.getByMarcaCliente(marca)  ;
+	public List<ProdutoDTO> listarProdutosCliente(MarcaDTO marca){
+		return marca.isEmpty()? permanencia.produtodao.get() : permanencia.produtodao.getByMarcaCliente(marca)  ;
 	}
-	public static List<ProdutoDTO> listarProdutos(MarcaDTO marca){
-		return marca.isEmpty()? produtodao.getByVendedor(VendedorView.vendedorLogado.getId()) : produtodao.getByMarca(marca, VendedorView.vendedorLogado.getId())  ;
+	public List<ProdutoDTO> listarProdutos(MarcaDTO marca){
+		return marca.isEmpty()? permanencia.produtodao.getByVendedor(VendedorView.vendedorLogado.getId()) : permanencia.produtodao.getByMarca(marca, VendedorView.vendedorLogado.getId())  ;
 	}
-	public static String alterarDados(ProdutoDTO prod) {
-		return produtodao.update(prod)? "Produto atualizado" : "Ocorreu um erro inesperado";
+	public String alterarDados(ProdutoDTO prod) {
+		return permanencia.produtodao.update(prod)? "Produto atualizado" : "Ocorreu um erro inesperado";
 	}
-	public static void mostrarDescricao(int idProduto) {
+	public void mostrarDescricao(int idProduto) {
 		ProdutoDTO produtoDTO = new ProdutoDTO();
 		produtoDTO.setId(idProduto);
-		ProdutoDTO produto = produtodao.find(produtoDTO).get(0);
+		ProdutoDTO produto = permanencia.produtodao.find(produtoDTO).get(0);
 		System.out.println("Nome      | "+produto.getNome());
 		System.out.println("Estoque   | "+produto.getEstoque());
 		System.out.println("Descrição | "+produto.getDescricao());
@@ -57,13 +56,13 @@ public class ProdutoBO extends BO {
 		System.out.println("Vendedor  | "+ vendedordto.getNome());
 
 	}
-	public static String excluirProduto(ProdutoDTO produto) {
-		return produtodao.delete(produto)? "Produto deletado com sucesso" :"Ocorreu um erro inesperado";
+	public String excluirProduto(ProdutoDTO produto) {
+		return permanencia.produtodao.delete(produto)? "Produto deletado com sucesso" :"Ocorreu um erro inesperado";
 	}
-	public static String cadastrarProduto (ProdutoDTO produto) {
-		return produtodao.create(produto)? "Produto cadastrado com sucesso": "Ocorreu um erro, tente novamente";
+	public String cadastrarProduto (ProdutoDTO produto) {
+		return permanencia.produtodao.create(produto)? "Produto cadastrado com sucesso": "Ocorreu um erro, tente novamente";
 	}
-	public static int qtdDigitos (int n) {
+	public int qtdDigitos (int n) {
 		n = Math.abs(n);
 		if (n == 0) return 1;
 		else return (int) (Math.log10 (n) + 1); 

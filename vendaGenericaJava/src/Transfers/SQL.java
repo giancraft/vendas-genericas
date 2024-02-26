@@ -11,12 +11,12 @@ import Interfaces.VendedorInterface;
 import DAO.*;
 
 public class SQL extends Transfer{
-	 public static CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoDAO();
-	 public static CarrinhoInterface carrinhodao = new CarrinhoDAO();
-	 public static ClienteInterface clientedao = new ClienteDAO();
-	 public static MarcaInterface marcadao = new MarcaDAO();
-	 public static PagamentoInterface pagdao = new PagamentoDAO();
-	 public static ProdutoPagoInterface produtopagoDao = new ProdutoPagoDAO();
-	 public static ProdutoInterface produtodao = new ProdutoDAO();
-	 public static VendedorInterface vendedordao = new VendedorDAO();
+	 public CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoDAO();
+	 public CarrinhoInterface carrinhodao = new CarrinhoDAO();
+	 public ClienteInterface clientedao = new ClienteDAO();
+	 public MarcaInterface marcadao = new MarcaDAO();
+	 public PagamentoInterface pagdao = new PagamentoDAO();
+	 public ProdutoPagoInterface produtopagoDao = new ProdutoPagoDAO();
+	 public ProdutoInterface produtodao = new ProdutoDAO();
+	 public VendedorInterface vendedordao = new VendedorDAO();
 }

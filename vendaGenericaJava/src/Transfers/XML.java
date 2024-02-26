@@ -11,12 +11,12 @@ import Interfaces.VendedorInterface;
 import XML.*;
 
 public class XML extends Transfer{
-	 public static CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoXML();
-	 public static CarrinhoInterface carrinhodao = new CarrinhoXML();
-	 public static ClienteInterface clientedao = new ClienteXML();
-	 public static MarcaInterface marcadao = new MarcaXML();
-	 public static PagamentoInterface pagdao = new PagamentoXML();
-	 public static ProdutoPagoInterface produtopagoDao = new ProdutoPagoXML();
-	 public static ProdutoInterface produtodao = new ProdutoXML();
-	 public static VendedorInterface vendedordao = new VendedorXML();
+	 public CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoXML();
+	 public CarrinhoInterface carrinhodao = new CarrinhoXML();
+	 public ClienteInterface clientedao = new ClienteXML();
+	 public MarcaInterface marcadao = new MarcaXML();
+	 public PagamentoInterface pagdao = new PagamentoXML();
+	 public ProdutoPagoInterface produtopagoDao = new ProdutoPagoXML();
+	 public ProdutoInterface produtodao = new ProdutoXML();
+	 public VendedorInterface vendedordao = new VendedorXML();
 }

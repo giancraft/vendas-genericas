@@ -10,17 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import BO.CarrinhoBO;
-import BO.ClienteBO;
-import BO.PagamentoBO;
-import BO.ProdutoBO;
-
-public class ClienteView {
-	public static Scanner input = new Scanner(System.in);
-	public static boolean loginStatus = false;
-	public static ContaDTO clienteLogado;
-	public static String redirectTo="";
-	
+public class ClienteView extends Painel{
 	public static void main(String[] args) {
 		if(!redirectTo.equals("")) {
 			switch(redirectTo) {
@@ -39,7 +29,7 @@ public class ClienteView {
 				response = input.nextInt();
 				input.nextLine();
 			}while(!(response==1 || response==0));
-			View.limparTerminal();
+			limparTerminal();
 			if(response == 0) {
 				realizarLogin();
 			}else {
@@ -52,7 +42,7 @@ public class ClienteView {
 				response = input.nextInt();
 				input.nextLine();
 			}while(!(response==1 || response==0 || response==2 || response==3 || response==4 || response==5));
-			View.limparTerminal();
+			limparTerminal();
 			if(response == 0) {
 				deslogar();
 			}else if(response == 1) {

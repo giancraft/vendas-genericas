@@ -11,12 +11,12 @@ import Interfaces.VendedorInterface;
 import JSON.*;
 
 public class JSON extends Transfer{
-	 public static CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoJSON();
-	 public static CarrinhoInterface carrinhodao = new CarrinhoJSON();
-	 public static ClienteInterface clientedao = new ClienteJSON();
-	 public static MarcaInterface marcadao = new MarcaJSON();
-	 public static PagamentoInterface pagdao = new PagamentoJSON();
-	 public static ProdutoPagoInterface produtopagoDao = new ProdutoPagoJSON();
-	 public static ProdutoInterface produtodao = new ProdutoJSON();
-	 public static VendedorInterface vendedordao = new VendedorJSON();
+	 public CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoJSON();
+	 public CarrinhoInterface carrinhodao = new CarrinhoJSON();
+	 public ClienteInterface clientedao = new ClienteJSON();
+	 public MarcaInterface marcadao = new MarcaJSON();
+	 public PagamentoInterface pagdao = new PagamentoJSON();
+	 public ProdutoPagoInterface produtopagoDao = new ProdutoPagoJSON();
+	 public ProdutoInterface produtodao = new ProdutoJSON();
+	 public VendedorInterface vendedordao = new VendedorJSON();
 }
