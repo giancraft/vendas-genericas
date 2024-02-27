@@ -6,10 +6,6 @@ import java.util.List;
 import DTO.CarrinhoDTO;
 import Interfaces.CarrinhoInterface;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
 public class CarrinhoJSON implements CarrinhoInterface{
 
 	@Override

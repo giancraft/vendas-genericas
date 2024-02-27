@@ -1,16 +1,38 @@
 package JSON;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import DTO.ContaDTO;
 import Interfaces.ClienteInterface;
 
-public class ClienteJSON implements ClienteInterface{
+import org.json.JSONArray;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+public class ClienteJSON implements ClienteInterface{
+	protected String pathFile = "JSON-data/clientes.json";
 	@Override
 	public boolean create(ContaDTO cliente) {
-		// TODO Auto-generated method stub
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(pathFile)));
+            if(!content.equals("")) {
+            	JSONArray jsonArray = new JSONArray(content);
+        		cliente.setId(jsonArray.length());
+                jsonArray.put(cliente.toArray());
+                try (FileWriter file = new FileWriter(pathFile)) {
+                    file.write(jsonArray.toString());
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		return false;
 	}
 
@@ -22,8 +44,26 @@ public class ClienteJSON implements ClienteInterface{
 
 	@Override
 	public List<ContaDTO> get() {
-		// TODO Auto-generated method stub
-		return null;
+		List<ContaDTO> clientes = new ArrayList<ContaDTO>();
+	    try {
+	        String content = new String(Files.readAllBytes(Paths.get("JSON-data/clientes.json")));
+	        if(!content.equals("")) {
+	        	JSONArray jsonArray = new JSONArray(content);
+	        	for(int i =0; i<jsonArray.length();i++) {;
+	            	JSONArray innerArray = jsonArray.getJSONArray(i);
+	        		ContaDTO cliente = new ContaDTO();
+	        		cliente.setSenha((String) innerArray.get(0));
+	        		cliente.setNome((String) innerArray.get(1));
+	        		cliente.setEmail((String) innerArray.get(2));
+	        		cliente.setTelefone((String) innerArray.get(3));
+	        		cliente.setId((int) innerArray.get(4));
+	        		clientes.add(cliente);
+	        	}
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return clientes;
 	}
 
 	@Override
