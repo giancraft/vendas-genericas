@@ -5,7 +5,7 @@ import java.util.List;
 import DTO.MarcaDTO;
 import Interfaces.MarcaInterface;
 
-public class MarcaJSON implements MarcaInterface {
+public class MarcaJSON extends JsonArchive implements MarcaInterface {
 
 	@Override
 	public boolean create(MarcaDTO marca) {

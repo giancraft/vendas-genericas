@@ -7,7 +7,7 @@ import java.util.List;
 import DTO.PagamentoDTO;
 import Interfaces.PagamentoInterface;
 
-public class PagamentoJSON implements PagamentoInterface {
+public class PagamentoJSON extends JsonArchive implements PagamentoInterface {
 
 	public boolean create(PagamentoDTO pagamento) {
 		// TODO Auto-generated method stub

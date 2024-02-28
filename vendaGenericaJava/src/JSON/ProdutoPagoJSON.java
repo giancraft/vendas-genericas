@@ -5,7 +5,7 @@ import java.util.List;
 import DTO.ProdutoDTO;
 import DTO.ProdutoPagoDTO;
 import Interfaces.ProdutoPagoInterface;
-public class ProdutoPagoJSON implements ProdutoPagoInterface{
+public class ProdutoPagoJSON extends JsonArchive implements ProdutoPagoInterface{
 
 	@Override
 	public boolean create(ProdutoPagoDTO produto) {
