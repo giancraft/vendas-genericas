@@ -15,7 +15,7 @@ import Interfaces.CarrinhoProdutoInterfaces;
 
 public class CarrinhoProdutoJSON extends JsonArchive implements CarrinhoProdutoInterfaces{
 
-	public String pathFile = "/JSON-data/carrinho-produto.json";
+	public String pathFile = "./JSON-data/carrinho-produto.json";
 	@Override
 	public boolean create(CarrinhoProdutoDTO carrinhoProduto) {
         try {

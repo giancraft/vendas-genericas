@@ -12,6 +12,12 @@ public class InserirConsultar {
 	
 	public static void main(String[] args) {
 		ProdutoDTO produto = new ProdutoDTO();
+		produto.setDescricao("Descricao teste");
+		produto.setEstoque(23);
+		produto.setMarca(0);
+		produto.setNome("teste");
+		produto.setPreco(2.55);
+		produto.setVendedor(0);
 		ProdutoBO.cadastrarProduto(produto);
 		
 		List<ProdutoDTO> produtos = ProdutoBO.listarProdutosCliente(new MarcaDTO());

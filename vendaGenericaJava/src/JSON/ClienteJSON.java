@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ClienteJSON extends JsonArchive implements ClienteInterface{
+	public String pathFile = "./JSON-data/vendedor.json";
 	@Override
 	public boolean create(ContaDTO cliente) {
         try {
@@ -81,18 +82,14 @@ public class ClienteJSON extends JsonArchive implements ClienteInterface{
 	        String content = new String(Files.readAllBytes(Paths.get(pathFile)));
 	        if(!content.equals("")) {
 	        	JSONArray jsonArray = new JSONArray(content);
-	        	for(int i =0; i<jsonArray.length();i++) {;
-	            	JSONArray innerArray = jsonArray.getJSONArray(i);
-	        		ContaDTO clientedto = new ContaDTO();
-	        		clientedto.setSenha((String) innerArray.get(0));
-	        		clientedto.setNome((String) innerArray.get(1));
-	        		clientedto.setEmail((String) innerArray.get(2));
-	        		clientedto.setTelefone((String) innerArray.get(3));
-	        		clientedto.setId((int) innerArray.get(4));
-	        		if(clientedto.toArray()==cliente.toArray()) {
-		        		clientes.add(cliente);
-	        		}
-	        	}
+            	JSONArray innerArray = jsonArray.getJSONArray(cliente.getId());
+        		ContaDTO clientedto = new ContaDTO();
+        		clientedto.setSenha((String) innerArray.get(0));
+        		clientedto.setNome((String) innerArray.get(1));
+        		clientedto.setEmail((String) innerArray.get(2));
+        		clientedto.setTelefone((String) innerArray.get(3));
+        		clientedto.setId((int) innerArray.get(4));
+        		clientes.add(clientedto);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

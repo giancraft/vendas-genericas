@@ -13,7 +13,7 @@ import DTO.ContaDTO;
 import Interfaces.VendedorInterface;
 
 public class VendedorJSON extends JsonArchive implements VendedorInterface {
-	public String pathFile = "/JSON-data/vendedor.json";
+	public String pathFile = "./JSON-data/vendedor.json";
 	@Override
 	public boolean create(ContaDTO vendedor) {
         try {
@@ -82,18 +82,14 @@ public class VendedorJSON extends JsonArchive implements VendedorInterface {
 	        String content = new String(Files.readAllBytes(Paths.get(pathFile)));
 	        if(!content.equals("")) {
 	        	JSONArray jsonArray = new JSONArray(content);
-	        	for(int i =0; i<jsonArray.length();i++) {;
-	            	JSONArray innerArray = jsonArray.getJSONArray(i);
-	        		ContaDTO clientedto = new ContaDTO();
-	        		clientedto.setSenha((String) innerArray.get(0));
-	        		clientedto.setNome((String) innerArray.get(1));
-	        		clientedto.setEmail((String) innerArray.get(2));
-	        		clientedto.setTelefone((String) innerArray.get(3));
-	        		clientedto.setId((int) innerArray.get(4));
-	        		if(clientedto.toArray()==vendedor.toArray()) {
-		        		clientes.add(vendedor);
-	        		}
-	        	}
+            	JSONArray innerArray = jsonArray.getJSONArray(vendedor.getId());
+        		ContaDTO clientedto = new ContaDTO();
+        		clientedto.setSenha((String) innerArray.get(0));
+        		clientedto.setNome((String) innerArray.get(1));
+        		clientedto.setEmail((String) innerArray.get(2));
+        		clientedto.setTelefone((String) innerArray.get(3));
+        		clientedto.setId((int) innerArray.get(4));
+        		clientes.add(clientedto);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

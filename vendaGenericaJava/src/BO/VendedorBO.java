@@ -46,9 +46,9 @@ public class VendedorBO extends BO {
         }
     }
     public String cadastrarVendedor(ContaDTO vendedor) {
-    	List<ContaDTO> email = permanencia.vendedordao.findByEmail(vendedor);
+    	List<ContaDTO> email = permanencia.getVendedordao().findByEmail(vendedor);
     	if(!(email.size()>0)) {
-    		permanencia.vendedordao.create(vendedor);
+    		permanencia.getVendedordao().create(vendedor);
     		VendedorView.redirectTo="";
     		return "Vendedor cadastrado com sucesso";
     	}else {
@@ -57,16 +57,16 @@ public class VendedorBO extends BO {
     	}
     }
     public String alterarDados(ContaDTO vendedor) {
-    	if(permanencia.vendedordao.update(vendedor)){
+    	if(permanencia.getVendedordao().update(vendedor)){
         	return "Dados alterados com sucesso";
     	}else {
         	return "Dados não puderam ser alterados, entre em contato com o suporte";
     	}
     }
     public String logarVendedor(ContaDTO vendedor) {
-    	List<ContaDTO> email = permanencia.vendedordao.findByEmail(vendedor);
+    	List<ContaDTO> email = permanencia.getVendedordao().findByEmail(vendedor);
     	if((email.size()>0)) {
-        	List<ContaDTO> pass = permanencia.vendedordao.findByEmailPassword(vendedor);
+        	List<ContaDTO> pass = permanencia.getVendedordao().findByEmailPassword(vendedor);
         	if((pass.size()>0)) {
         		VendedorView.vendedorLogado = pass.get(0);
         		VendedorView.loginStatus = true;

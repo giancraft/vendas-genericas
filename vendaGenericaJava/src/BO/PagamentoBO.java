@@ -12,13 +12,13 @@ import ENUMS.StatusPagamento;
 
 public class PagamentoBO extends BO {
 	public List<PagamentoDTO> getByData(LocalDate inicio, LocalDate fim){
-		return permanencia.pagdao.getByData(inicio, fim);
+		return permanencia.getPagdao().getByData(inicio, fim);
 	}
 	public List<PagamentoDTO> getByCarrinho(int id){
-		return permanencia.pagdao.getByCarrinho(id);
+		return permanencia.getPagdao().getByCarrinho(id);
 	}
 	public List<PagamentoDTO> getLast(int id) {
-		return permanencia.pagdao.getLastByCarrinho(id);
+		return permanencia.getPagdao().getLastByCarrinho(id);
 	}
 	public String cadastrarPagamento(int id, String forma) {
 		PagamentoDTO pagamento = new PagamentoDTO();
@@ -28,10 +28,10 @@ public class PagamentoBO extends BO {
 		pagamento.setStatus(StatusPagamento.FINALIZADO);
 		
 		CarrinhoProdutoDTO carrinho = new CarrinhoProdutoDTO();
-		carrinho = permanencia.carrinhoR.getByCarrinho(id).get(0);
+		carrinho = permanencia.getCarrinhoR().getByCarrinho(id).get(0);
 		ProdutoBO produtoBo = new ProdutoBO();
 		List<ProdutoDTO> produtos = produtoBo.obterPorId(carrinho);
-		permanencia.pagdao.create(pagamento);
+		permanencia.getPagdao().create(pagamento);
 		pagamento=this.getLast(id).get(0);
 
 		ProdutoPagoDTO produtoPago = new ProdutoPagoDTO();
@@ -42,7 +42,7 @@ public class PagamentoBO extends BO {
 			produtoPago.setPreco(produtos.get(i).getPreco());
 			CarrinhoBO carrinhoBo = new CarrinhoBO();
 			produtoPago.setQuantidade(carrinhoBo.getProdutoCadastrado(produtos.get(i)).get(0).getQuantidade());
-			permanencia.produtopagoDao.create(produtoPago);
+			permanencia.getProdutopagoDao().create(produtoPago);
 		}
 		
 		return "Pagamento realizado";

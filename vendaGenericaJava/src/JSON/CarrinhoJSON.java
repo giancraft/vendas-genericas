@@ -15,7 +15,7 @@ import DTO.CarrinhoProdutoDTO;
 import Interfaces.CarrinhoInterface;
 
 public class CarrinhoJSON extends JsonArchive implements CarrinhoInterface{
-	public String pathFile = "/JSON-data/carrinho.json";
+	public String pathFile = "./JSON-data/carrinho.json";
 	@Override
 	public boolean create(CarrinhoDTO carrinho) {
         try {
@@ -82,16 +82,12 @@ public class CarrinhoJSON extends JsonArchive implements CarrinhoInterface{
 	        String content = new String(Files.readAllBytes(Paths.get(pathFile)));
 	        if(!content.equals("")) {
 	        	JSONArray jsonArray = new JSONArray(content);
-	        	for(int i =0; i<jsonArray.length();i++) {;
-	            	JSONArray innerArray = jsonArray.getJSONArray(i);
-	        		CarrinhoDTO carrinhodto = new CarrinhoDTO();
-	        		carrinhodto.setCliente((int) innerArray.get(0));
-	        		carrinhodto.setNome((String) innerArray.get(1));
-	        		carrinhodto.setId((int) innerArray.get(2));
-	        		if(carrinhodto.toArray()==carrinho.toArray()) {
-		        		carrinhos.add(carrinhodto);
-	        		}
-	        	}
+            	JSONArray innerArray = jsonArray.getJSONArray(carrinho.getId());
+        		CarrinhoDTO carrinhodto = new CarrinhoDTO();
+        		carrinhodto.setCliente((int) innerArray.get(0));
+        		carrinhodto.setNome((String) innerArray.get(1));
+        		carrinhodto.setId((int) innerArray.get(2));
+        		carrinhos.add(carrinhodto);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

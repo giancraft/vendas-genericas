@@ -9,6 +9,10 @@ import DTO.ContaDTO;
 import VIEW.ClienteView;
 
 public class ClienteBO extends BO{
+	
+	public ClienteBO() {
+		super();
+	}
 
     public boolean validarEmail(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -46,9 +50,9 @@ public class ClienteBO extends BO{
         }
     }
     public String cadastrarCliente(ContaDTO cliente) {
-    	List<ContaDTO> email = permanencia.clientedao.findByEmail(cliente);
+    	List<ContaDTO> email = permanencia.getClientedao().findByEmail(cliente);
     	if(!(email.size()>0)) {
-    		permanencia.clientedao.create(cliente);
+    		permanencia.getClientedao().create(cliente);
     		ClienteView.redirectTo="";
     		return "Cliente cadastrado com sucesso";
     	}else {
@@ -57,16 +61,16 @@ public class ClienteBO extends BO{
     	}
     }
     public String alterarDados(ContaDTO cliente) {
-    	if(permanencia.clientedao.update(cliente)){
+    	if(permanencia.getClientedao().update(cliente)){
         	return "Dados alterados com sucesso";
     	}else {
         	return "Dados não puderam ser alterados, entre em contato com o suporte";
     	}
     }
     public String logarCliente(ContaDTO cliente) {
-    	List<ContaDTO> email = permanencia.clientedao.findByEmail(cliente);
+    	List<ContaDTO> email = permanencia.getClientedao().findByEmail(cliente);
     	if((email.size()>0)) {
-        	List<ContaDTO> pass = permanencia.clientedao.findByEmailPassword(cliente);
+        	List<ContaDTO> pass = permanencia.getClientedao().findByEmailPassword(cliente);
         	if((pass.size()>0)) {
         		ClienteView.clienteLogado = pass.get(0);
         		ClienteView.loginStatus = true;

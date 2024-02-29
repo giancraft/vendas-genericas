@@ -11,12 +11,62 @@ import Interfaces.VendedorInterface;
 import JSON.*;
 
 public class JSON extends Transfer{
-	 public CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoJSON();
-	 public CarrinhoInterface carrinhodao = new CarrinhoJSON();
-	 public ClienteInterface clientedao = new ClienteJSON();
-	 public MarcaInterface marcadao = new MarcaJSON();
-	 public PagamentoInterface pagdao = new PagamentoJSON();
-	 public ProdutoPagoInterface produtopagoDao = new ProdutoPagoJSON();
-	 public ProdutoInterface produtodao = new ProdutoJSON();
-	 public VendedorInterface vendedordao = new VendedorJSON();
+	private CarrinhoProdutoInterfaces carrinhoR = new CarrinhoProdutoJSON();
+	private CarrinhoInterface carrinhodao = new CarrinhoJSON();
+	private ClienteInterface clientedao = new ClienteJSON();
+	private MarcaInterface marcadao = new MarcaJSON();
+	private PagamentoInterface pagdao = new PagamentoJSON();
+	private ProdutoPagoInterface produtopagoDao = new ProdutoPagoJSON();
+	private ProdutoInterface produtodao = new ProdutoJSON();
+	private VendedorInterface vendedordao = new VendedorJSON();
+	public CarrinhoProdutoInterfaces getCarrinhoR() {
+		return carrinhoR;
+	}
+	public void setCarrinhoR(CarrinhoProdutoInterfaces carrinhoR) {
+		this.carrinhoR = carrinhoR;
+	}
+	public CarrinhoInterface getCarrinhodao() {
+		return carrinhodao;
+	}
+	public void setCarrinhodao(CarrinhoInterface carrinhodao) {
+		this.carrinhodao = carrinhodao;
+	}
+	public ClienteInterface getClientedao() {
+		return clientedao;
+	}
+	public void setClientedao(ClienteInterface clientedao) {
+		this.clientedao = clientedao;
+	}
+	public MarcaInterface getMarcadao() {
+		return marcadao;
+	}
+	public void setMarcadao(MarcaInterface marcadao) {
+		this.marcadao = marcadao;
+	}
+	public PagamentoInterface getPagdao() {
+		return pagdao;
+	}
+	public void setPagdao(PagamentoInterface pagdao) {
+		this.pagdao = pagdao;
+	}
+	public ProdutoPagoInterface getProdutopagoDao() {
+		return produtopagoDao;
+	}
+	public void setProdutopagoDao(ProdutoPagoInterface produtopagoDao) {
+		this.produtopagoDao = produtopagoDao;
+	}
+	public ProdutoInterface getProdutodao() {
+		return produtodao;
+	}
+	public void setProdutodao(ProdutoInterface produtodao) {
+		this.produtodao = produtodao;
+	}
+	public VendedorInterface getVendedordao() {
+		return vendedordao;
+	}
+	public void setVendedordao(VendedorInterface vendedordao) {
+		this.vendedordao = vendedordao;
+	}
+	 
+	 
 }
