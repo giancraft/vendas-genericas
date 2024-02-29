@@ -160,10 +160,9 @@ public class VendedorView extends Painel{
 			System.out.println("Insira a quantidade em estoque([-1] para vazio): ");
 			estoque = input.nextInt();
 		}while(estoque<-1);
-		ProdutoDAO prodDao = new ProdutoDAO();
 		ProdutoDTO produtoUpdate = new ProdutoDTO();
 		produtoUpdate.setId(id);
-		produtoUpdate= prodDao.find(produtoUpdate).get(0);
+		produtoUpdate= ProdutoBO.permanencia.getProdutodao().find(produtoUpdate).get(0);
 		if(!nome.equals("")) {
 			produtoUpdate.setNome(nome);
 		}

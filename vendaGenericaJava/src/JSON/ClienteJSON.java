@@ -112,7 +112,7 @@ public class ClienteJSON extends JsonArchive implements ClienteInterface{
 	        		clientedto.setEmail((String) innerArray.get(2));
 	        		clientedto.setTelefone((String) innerArray.get(3));
 	        		clientedto.setId((int) innerArray.get(4));
-	        		if(clientedto.getEmail()==cliente.getEmail()) {
+	        		if(clientedto.getEmail().toString().equals(cliente.getEmail())) {
 		        		clientes.add(cliente);
 	        		}
 	        	}
@@ -138,7 +138,7 @@ public class ClienteJSON extends JsonArchive implements ClienteInterface{
 	        		clientedto.setEmail((String) innerArray.get(2));
 	        		clientedto.setTelefone((String) innerArray.get(3));
 	        		clientedto.setId((int) innerArray.get(4));
-	        		if(clientedto.getEmail()==cliente.getEmail() && clientedto.getSenha()==cliente.getSenha()) {
+	        		if(clientedto.getEmail().toString().equals(cliente.getEmail()) && clientedto.getSenha().toString().equals(cliente.getSenha())) {
 		        		clientes.add(cliente);
 	        		}
 	        	}

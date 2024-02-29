@@ -109,7 +109,7 @@ public class PagamentoJSON extends JsonArchive implements PagamentoInterface {
 	        if(!content.equals("")) {
 	        	JSONArray jsonArray = new JSONArray(content);
 	        	boolean stop = false;
-	        	for(int i =jsonArray.length(); i>0 || stop;i--) {;
+	        	for(int i =jsonArray.length()-1; i>0;i--) {;
 	            	JSONArray innerArray = jsonArray.getJSONArray(i);
 	            	PagamentoDTO pagamentodto = new PagamentoDTO();
 					String dt = (String) innerArray.get(6);
@@ -120,7 +120,7 @@ public class PagamentoJSON extends JsonArchive implements PagamentoInterface {
 	            	pagamentodto.setCarrinho((int) innerArray.get(7));
 	            	pagamentodto.setFormaPagamento(FormaPagamento.valueOf((String) innerArray.get(1)));
 	            	pagamentodto.setStatus(StatusPagamento.valueOf((String) innerArray.get(2)));
-	        		if(pagamentodto.getCarrinho()==id) {
+	        		if(pagamentodto.getCarrinho()==id && !stop) {
 	        			pagamentos.add(pagamentodto);
 	        			stop=true;
 	        		}

@@ -60,10 +60,9 @@ public class CarrinhoBO extends BO{
 	public List<CarrinhoProdutoDTO> mostrarProdutos(int id){
 		List<CarrinhoProdutoDTO> carrinhos = permanencia.getCarrinhoR().getByCarrinho(id);
 		for(int i=0; i<carrinhos.size(); i++) {
-			ProdutoDAO produtodao = new ProdutoDAO();
 			ProdutoDTO produto = new ProdutoDTO();
 			produto.setId(carrinhos.get(i).getIdProduto());
-			produto = produtodao.find(produto).get(0);
+			produto = permanencia.getProdutodao().find(produto).get(0);
 			carrinhos.get(i).setNome(produto.getNome());
 		}
 		return carrinhos;

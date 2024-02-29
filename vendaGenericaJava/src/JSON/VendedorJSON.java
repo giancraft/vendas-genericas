@@ -118,7 +118,7 @@ public class VendedorJSON extends JsonArchive implements VendedorInterface {
 	        		clientedto.setEmail((String) innerArray.get(2));
 	        		clientedto.setTelefone((String) innerArray.get(3));
 	        		clientedto.setId((int) innerArray.get(4));
-	        		if(clientedto.getEmail()==vendedor.getEmail()) {
+	        		if(clientedto.getEmail().toString().equals(vendedor.getEmail())) {
 		        		clientes.add(vendedor);
 	        		}
 	        	}
@@ -144,7 +144,7 @@ public class VendedorJSON extends JsonArchive implements VendedorInterface {
 	        		clientedto.setEmail((String) innerArray.get(2));
 	        		clientedto.setTelefone((String) innerArray.get(3));
 	        		clientedto.setId((int) innerArray.get(4));
-	        		if(clientedto.getEmail()==vendedor.getEmail() && clientedto.getSenha()==vendedor.getSenha()) {
+	        		if(clientedto.getEmail().toString().equals(vendedor.getEmail())&& clientedto.getSenha().toString().equals(vendedor.getSenha())) {
 		        		clientes.add(vendedor);
 	        		}
 	        	}

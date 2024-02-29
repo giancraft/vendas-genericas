@@ -132,7 +132,7 @@ public class CarrinhoJSON extends JsonArchive implements CarrinhoInterface{
 	        		carrinhodto.setCliente((int) innerArray.get(0));
 	        		carrinhodto.setNome((String) innerArray.get(1));
 	        		carrinhodto.setId((int) innerArray.get(2));
-	        		if(carrinhodto.getNome()==nome) {
+	        		if(carrinhodto.getNome().toString().equals(nome)) {
 		        		carrinhos.add(carrinhodto);
 	        		}
 	        	}

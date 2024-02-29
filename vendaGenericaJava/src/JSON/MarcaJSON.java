@@ -62,7 +62,7 @@ public class MarcaJSON extends JsonArchive implements MarcaInterface {
 	            	JSONArray innerArray = jsonArray.getJSONArray(i);
 	            	MarcaDTO marca = new MarcaDTO();
 	        		marca.setNome((String) innerArray.get(0));
-	        		marca.setId((int) innerArray.get(0));
+	        		marca.setId(i);
 	        		marcas.add(marca);
 	        	}
 	        }
@@ -82,7 +82,7 @@ public class MarcaJSON extends JsonArchive implements MarcaInterface {
             	JSONArray innerArray = jsonArray.getJSONArray(marca.getId());
             	MarcaDTO marcadto = new MarcaDTO();
             	marcadto.setNome((String) innerArray.get(0));
-        		marcadto.setId((int) innerArray.get(0));
+        		marcadto.setId(marca.getId());
     			marcas.add(marcadto);
 	        }
 	    } catch (Exception e) {
@@ -102,8 +102,8 @@ public class MarcaJSON extends JsonArchive implements MarcaInterface {
 	            	JSONArray innerArray = jsonArray.getJSONArray(i);
 	            	MarcaDTO marcadto = new MarcaDTO();
 	            	marcadto.setNome((String) innerArray.get(0));
-	        		marcadto.setId((int) innerArray.get(0));
-	        		if(marcadto.getNome()==nomeM) {
+	        		marcadto.setId(i);
+	        		if(marcadto.getNome().toString().equals(nomeM)) {
 	        			marcas.add(marcadto);
 	        		}
 	        	}

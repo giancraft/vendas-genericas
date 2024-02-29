@@ -43,17 +43,19 @@ public class ProdutoBO extends BO {
 		System.out.println("Estoque   | "+produto.getEstoque());
 		System.out.println("Descrição | "+produto.getDescricao());
 
-		MarcaDAO marcaDao = new MarcaDAO();
 		MarcaDTO marcaDTO = new MarcaDTO();
 		marcaDTO.setId(produto.getMarca());
-		marcaDTO = marcaDao.find(marcaDTO).get(0);
-		System.out.println("Marca     | "+ marcaDTO.getNome());
+		if( permanencia.getMarcadao().find(marcaDTO).size()>0) {
+			marcaDTO = permanencia.getMarcadao().find(marcaDTO).get(0);
+			System.out.println("Marca     | "+ marcaDTO.getNome());			
+		}
 
-		VendedorDAO vendedorDao = new VendedorDAO();
 		ContaDTO vendedordto = new ContaDTO();
 		vendedordto.setId(produto.getVendedor());
-		vendedordto = vendedorDao.find(vendedordto).get(0);
-		System.out.println("Vendedor  | "+ vendedordto.getNome());
+		if( permanencia.getVendedordao().find(vendedordto).size()>0) {
+			vendedordto = permanencia.getVendedordao().find(vendedordto).get(0);
+			System.out.println("Vendedor  | "+ vendedordto.getNome());		
+		}
 
 	}
 	public String excluirProduto(ProdutoDTO produto) {

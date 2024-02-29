@@ -167,7 +167,7 @@ public class CarrinhoProdutoJSON extends JsonArchive implements CarrinhoProdutoI
 	        		carrinhoProd.setIdCarrinho((int) innerArray.get(0));
 	        		carrinhoProd.setIdProduto((int) innerArray.get(1));
 	        		carrinhoProd.setQuantidade((int) innerArray.get(2));
-	        		if(carrinhoProd.toArray()==carrinhoProduto.toArray()) {
+	        		if(carrinhoProd.getIdProduto()==carrinhoProduto.getIdProduto() && carrinhoProd.getIdCarrinho() == carrinhoProduto.getIdCarrinho()) {
 		        		carrinhoProdutos.add(carrinhoProd);
 	        		}
 	        	}
