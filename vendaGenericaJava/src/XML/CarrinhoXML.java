@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import DTO.CarrinhoDTO;
+import DTO.CarrinhoProdutoDTO;
 import Interfaces.CarrinhoInterface;
 import java.io.File;
 import java.io.IOException;
@@ -261,8 +262,12 @@ public class CarrinhoXML implements CarrinhoInterface {
 
 	@Override
 	public boolean insertProdutoInCarrinho(int produtoId, int quantidade, int carrinhoId) {
-		// TODO Auto-generated method stub
-		return false;
+		CarrinhoProdutoXML xmlcar = new CarrinhoProdutoXML();
+		CarrinhoProdutoDTO carrinhoProd = new CarrinhoProdutoDTO();
+		carrinhoProd.setIdCarrinho(carrinhoId);
+		carrinhoProd.setQuantidade(quantidade);
+		carrinhoProd.setIdProduto(produtoId);
+		return xmlcar.create(carrinhoProd);
 	}
     private void saveChangesToFile(Document doc, File file) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
