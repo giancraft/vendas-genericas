@@ -9,7 +9,6 @@ import DAO.CarrinhoDAO;
 import DAO.CarrinhoProdutoDAO;
 import DAO.ClienteDAO;
 import DAO.MarcaDAO;
-import DAO.ProdutoDAO;
 import DTO.CarrinhoDTO;
 import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;

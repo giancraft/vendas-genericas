@@ -11,7 +11,6 @@ public class ProdutoXML implements ProdutoInterface{
 
 	@Override
 	public boolean create(ProdutoDTO produto) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

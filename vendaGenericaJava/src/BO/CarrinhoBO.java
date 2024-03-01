@@ -3,7 +3,6 @@ package BO;
 import java.util.List;
 
 import DAO.PagamentoDAO;
-import DAO.ProdutoDAO;
 import DAO.ProdutoPagoDAO;
 import DTO.CarrinhoDTO;
 import DTO.CarrinhoProdutoDTO;

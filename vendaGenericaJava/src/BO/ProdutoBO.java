@@ -2,8 +2,6 @@ package BO;
 
 import java.util.List;
 
-import DAO.MarcaDAO;
-import DAO.VendedorDAO;
 import DTO.CarrinhoProdutoDTO;
 import DTO.ContaDTO;
 import DTO.MarcaDTO;
